@@ -1,0 +1,105 @@
+package br.com.nexo.dto;
+
+import java.time.LocalDateTime;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+
+public class DescricaoClienteDTO {
+
+    private Long idDescricao;
+
+    private Long idUsuario;
+
+    @Size(max = 30)
+    private String nmArea;
+
+    @Size(max = 30)
+    private String dsOcupacao;
+
+    @Min(0)
+    private Integer qtdaAnosExperiencia;
+
+    private Integer dsSatisfacao;
+
+    private Integer dsTecnologia;
+
+    private Integer dsMudanca;
+
+    private LocalDateTime dtInput;
+
+    public DescricaoClienteDTO() {
+    }
+
+    public Long getIdDescricao() {
+        return idDescricao;
+    }
+
+    public void setIdDescricao(Long idDescricao) {
+        this.idDescricao = idDescricao;
+    }
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNmArea() {
+        return nmArea;
+    }
+
+    public void setNmArea(String nmArea) {
+        this.nmArea = nmArea;
+    }
+
+    public String getDsOcupacao() {
+        return dsOcupacao;
+    }
+
+    public void setDsOcupacao(String dsOcupacao) {
+        this.dsOcupacao = dsOcupacao;
+    }
+
+    public Integer getQtdaAnosExperiencia() {
+        return qtdaAnosExperiencia;
+    }
+
+    public void setQtdaAnosExperiencia(Integer qtdaAnosExperiencia) {
+        this.qtdaAnosExperiencia = qtdaAnosExperiencia;
+    }
+
+    public Integer getDsSatisfacao() {
+        return dsSatisfacao;
+    }
+
+    public void setDsSatisfacao(Integer dsSatisfacao) {
+        this.dsSatisfacao = dsSatisfacao;
+    }
+
+    public Integer getDsTecnologia() {
+        return dsTecnologia;
+    }
+
+    public void setDsTecnologia(Integer dsTecnologia) {
+        this.dsTecnologia = dsTecnologia;
+    }
+
+    public Integer getDsMudanca() {
+        return dsMudanca;
+    }
+
+    public void setDsMudanca(Integer dsMudanca) {
+        this.dsMudanca = dsMudanca;
+    }
+
+    public LocalDateTime getDtInput() {
+        return dtInput;
+    }
+
+    public void setDtInput(LocalDateTime dtInput) {
+        this.dtInput = dtInput;
+    }
+}
