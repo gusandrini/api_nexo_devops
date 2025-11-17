@@ -9,7 +9,8 @@ import jakarta.validation.constraints.Size;
 import br.com.nexo.model.Usuario;
 import java.util.stream.Collectors;
 
-public class UsuarioDTO {
+
+public class UsuarioDTO{
 
     private Long idUsuario;
 

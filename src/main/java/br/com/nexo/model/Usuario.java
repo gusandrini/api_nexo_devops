@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import br.com.nexo.validation.ValidationGroups;
 
 @Entity
 @Table(name = "TB_NX_USUARIO")
@@ -38,7 +39,7 @@ public class Usuario {
     private String nmEmail;
 
     @Column(name = "nm_senha", length = 20, nullable = false)
-    @NotBlank
+    @NotBlank(groups = ValidationGroups.Create.class)
     @Size(max = 20)
     private String nmSenha;
 
