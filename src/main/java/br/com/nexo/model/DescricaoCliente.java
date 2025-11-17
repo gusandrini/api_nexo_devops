@@ -31,9 +31,25 @@ public class DescricaoCliente {
     @Size(max = 30)
     private String nmArea;
 
-    @Column(name = "ds_ocupacao", length = 30)
-    @Size(max = 30)
-    private String dsOcupacao;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_ocupacao")
+    private Ocupacao ocupacao;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_campo_estudo")
+    private CampoEstudo campoEstudo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_genero")
+    private Genero genero;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_nivel_educacional")
+    private NivelEducacional nivelEducacional;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_influencia_familiar")
+    private InfluenciaFamiliar influenciaFamiliar;
 
     @Column(name = "qtda_anos_experiencia")
     @Min(0)
@@ -78,12 +94,44 @@ public class DescricaoCliente {
         this.nmArea = nmArea;
     }
 
-    public String getDsOcupacao() {
-        return dsOcupacao;
+    public Ocupacao getOcupacao() {
+        return ocupacao;
     }
 
-    public void setDsOcupacao(String dsOcupacao) {
-        this.dsOcupacao = dsOcupacao;
+    public void setOcupacao(Ocupacao ocupacao) {
+        this.ocupacao = ocupacao;
+    }
+
+    public CampoEstudo getCampoEstudo() {
+        return campoEstudo;
+    }
+
+    public void setCampoEstudo(CampoEstudo campoEstudo) {
+        this.campoEstudo = campoEstudo;
+    }
+
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
+
+    public NivelEducacional getNivelEducacional() {
+        return nivelEducacional;
+    }
+
+    public void setNivelEducacional(NivelEducacional nivelEducacional) {
+        this.nivelEducacional = nivelEducacional;
+    }
+
+    public InfluenciaFamiliar getInfluenciaFamiliar() {
+        return influenciaFamiliar;
+    }
+
+    public void setInfluenciaFamiliar(InfluenciaFamiliar influenciaFamiliar) {
+        this.influenciaFamiliar = influenciaFamiliar;
     }
 
     public Integer getQtdaAnosExperiencia() {
