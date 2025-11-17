@@ -12,10 +12,21 @@ import org.springframework.web.server.ResponseStatusException;
 import jakarta.validation.Valid;
 
 import br.com.nexo.dto.DescricaoClienteDTO;
+import br.com.nexo.model.CampoEstudo;
 import br.com.nexo.model.DescricaoCliente;
+import br.com.nexo.model.Genero;
+import br.com.nexo.model.InfluenciaFamiliar;
+import br.com.nexo.model.NivelEducacional;
+import br.com.nexo.model.Ocupacao;
 import br.com.nexo.model.Usuario;
 import br.com.nexo.repository.DescricaoClienteRepository;
+import br.com.nexo.repository.OcupacaoRepository;
 import br.com.nexo.repository.UsuarioRepository;
+import br.com.nexo.repository.CampoEstudoRepository;
+import br.com.nexo.repository.GeneroRepository;
+import br.com.nexo.repository.NivelEducacionalRepository;
+import br.com.nexo.repository.InfluenciaFamiliarRepository;
+
 
 @RestController
 @RequestMapping("/descricao-clientes")
@@ -26,6 +37,21 @@ public class DescricaoClienteApiController {
 
     @Autowired
     private UsuarioRepository repUsuario;
+
+    @Autowired
+    private OcupacaoRepository repOcupacao;
+    
+    @Autowired
+    private CampoEstudoRepository repCampoEstudo;
+    
+    @Autowired
+    private GeneroRepository repGenero;
+
+    @Autowired
+    private NivelEducacionalRepository repNivelEducacional;
+
+    @Autowired
+    private InfluenciaFamiliarRepository repInfluenciaFamiliar;
 
     @GetMapping("/todos")
     public List<DescricaoCliente> retornaTodos() {
@@ -51,8 +77,37 @@ public class DescricaoClienteApiController {
         Usuario usuario = repUsuario.findById(dto.getIdUsuario())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         desc.setUsuario(usuario);
-        desc.setNmArea(dto.getNmArea());
-        desc.setDsOcupacao(dto.getDsOcupacao());
+        // idOcupacao, idCampoEstudo e idGenero são obrigatórios agora (códigos que o modelo espera)
+        if (dto.getIdOcupacao() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idOcupacao é obrigatório");
+        }
+        if (dto.getIdCampoEstudo() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idCampoEstudo é obrigatório");
+        }
+        if (dto.getIdGenero() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idGenero é obrigatório");
+        }
+        if (dto.getIdNivelEducacional() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idNivelEducacional é obrigatório");
+        }
+        if (dto.getIdInfluenciaFamiliar() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idInfluenciaFamiliar é obrigatório");
+        }
+        Ocupacao ocup = repOcupacao.findById(dto.getIdOcupacao())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ocupação não encontrada"));
+        desc.setOcupacao(ocup);
+        br.com.nexo.model.CampoEstudo campo = repCampoEstudo.findById(dto.getIdCampoEstudo())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Campo de estudo não encontrado"));
+        desc.setCampoEstudo(campo);
+        br.com.nexo.model.Genero genero = repGenero.findById(dto.getIdGenero())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gênero não encontrado"));
+        desc.setGenero(genero);
+        br.com.nexo.model.NivelEducacional nivel = repNivelEducacional.findById(dto.getIdNivelEducacional())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nível educacional não encontrado"));
+        desc.setNivelEducacional(nivel);
+        br.com.nexo.model.InfluenciaFamiliar influencia = repInfluenciaFamiliar.findById(dto.getIdInfluenciaFamiliar())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Influência familiar não encontrada"));
+        desc.setInfluenciaFamiliar(influencia);
         desc.setQtdaAnosExperiencia(dto.getQtdaAnosExperiencia());
         desc.setDsSatisfacao(dto.getDsSatisfacao());
         desc.setDsTecnologia(dto.getDsTecnologia());
@@ -74,8 +129,32 @@ public class DescricaoClienteApiController {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
             desc.setUsuario(usuario);
         }
-        desc.setNmArea(dto.getNmArea());
-        desc.setDsOcupacao(dto.getDsOcupacao());
+        // atualizar ocupacao e campo de estudo se fornecidos
+        if (dto.getIdOcupacao() != null) {
+            Ocupacao ocup = repOcupacao.findById(dto.getIdOcupacao())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ocupação não encontrada"));
+            desc.setOcupacao(ocup);
+        }
+        if (dto.getIdCampoEstudo() != null) {
+            CampoEstudo campo = repCampoEstudo.findById(dto.getIdCampoEstudo())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Campo de estudo não encontrado"));
+            desc.setCampoEstudo(campo);
+        }
+        if (dto.getIdGenero() != null) {
+            Genero genero = repGenero.findById(dto.getIdGenero())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gênero não encontrado"));
+            desc.setGenero(genero);
+        }
+        if (dto.getIdNivelEducacional() != null) {
+            NivelEducacional nivel = repNivelEducacional.findById(dto.getIdNivelEducacional())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nível educacional não encontrado"));
+            desc.setNivelEducacional(nivel);
+        }
+        if (dto.getIdInfluenciaFamiliar() != null) {
+            InfluenciaFamiliar influencia = repInfluenciaFamiliar.findById(dto.getIdInfluenciaFamiliar())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Influência familiar não encontrada"));
+            desc.setInfluenciaFamiliar(influencia);
+        }
         desc.setQtdaAnosExperiencia(dto.getQtdaAnosExperiencia());
         desc.setDsSatisfacao(dto.getDsSatisfacao());
         desc.setDsTecnologia(dto.getDsTecnologia());

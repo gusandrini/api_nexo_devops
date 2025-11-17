@@ -11,6 +11,16 @@ public class DescricaoClienteDTO {
 
     private Long idUsuario;
 
+    private Long idOcupacao;
+
+    private Long idCampoEstudo;
+
+    private Long idGenero;
+
+    private Long idNivelEducacional;
+
+    private Long idInfluenciaFamiliar;
+
     @Size(max = 30)
     private String nmArea;
 
@@ -45,6 +55,46 @@ public class DescricaoClienteDTO {
 
     public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public Long getIdOcupacao() {
+        return idOcupacao;
+    }
+
+    public void setIdOcupacao(Long idOcupacao) {
+        this.idOcupacao = idOcupacao;
+    }
+
+    public Long getIdCampoEstudo() {
+        return idCampoEstudo;
+    }
+
+    public void setIdCampoEstudo(Long idCampoEstudo) {
+        this.idCampoEstudo = idCampoEstudo;
+    }
+
+    public Long getIdGenero() {
+        return idGenero;
+    }
+
+    public void setIdGenero(Long idGenero) {
+        this.idGenero = idGenero;
+    }
+
+    public Long getIdNivelEducacional() {
+        return idNivelEducacional;
+    }
+
+    public void setIdNivelEducacional(Long idNivelEducacional) {
+        this.idNivelEducacional = idNivelEducacional;
+    }
+
+    public Long getIdInfluenciaFamiliar() {
+        return idInfluenciaFamiliar;
+    }
+
+    public void setIdInfluenciaFamiliar(Long idInfluenciaFamiliar) {
+        this.idInfluenciaFamiliar = idInfluenciaFamiliar;
     }
 
     public String getNmArea() {
