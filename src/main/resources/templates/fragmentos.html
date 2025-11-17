@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:fragment="head(title)">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title th:text="${title}">NEXO</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" th:href="@{/css/nexo.css}" />
+        <style>
+            body{background:#fff}
+            .nexo-logo { height:64px; max-height:64px; }
+            @media (max-width:576px) { .nexo-logo { height:48px; max-height:48px; } }
+            .header-title { margin-left:0.5rem; font-weight:600; font-size:1.05rem; color:#1f2937; }
+            header.nexo-header { padding:12px 0; box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
+        </style>
+    </th:block>
+</head>
+<body>
+    <div th:fragment="header(title)">
+        <header class="nexo-header bg-white">
+            <div class="container d-flex align-items-center gap-3">
+                <a th:href="@{/}" class="d-flex align-items-center">
+                    <img th:src="@{/images/NEXO.png}" alt="NEXO" class="nexo-logo" onerror="this.style.display='none'" />
+                </a>
+                <h1 class="header-title mb-0" th:text="${title}"></h1>
+                <div class="ms-auto"></div>
+            </div>
+        </header>
+    </div>
+</body>
+</html>

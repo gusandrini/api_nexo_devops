@@ -1,0 +1,16 @@
+:root{
+    --nexo-blue: #0033ff;
+    --nexo-dark: #001f7a;
+    --nexo-accent: #ff4d4d;
+}
+body{ background: linear-gradient(180deg,#f7f9ff 0%, #ffffff 100%); color:#222; }
+.nexo-header{ background: linear-gradient(90deg,var(--nexo-blue), var(--nexo-dark)); padding:0.5rem 0; }
+.nexo-logo{ height:48px; }
+.nexo-container{ background:#fff; padding:1rem; border-radius:8px; box-shadow:0 6px 18px rgba(10,20,60,0.06); }
+.btn-nexo{ background:var(--nexo-blue); color:#fff; border-color:var(--nexo-blue); }
+.btn-nexo:hover{ background:var(--nexo-dark); border-color:var(--nexo-dark); }
+.table thead th{ background: linear-gradient(90deg,var(--nexo-blue), var(--nexo-dark)); color:#fff; }
+.form-text{ color:#666; }
+.header-title{ color:#fff; font-weight:700; margin-left:12px; }
+
+@media(max-width:576px){ .nexo-logo{ height:38px; } }
