@@ -20,11 +20,13 @@ public class UsuarioDetailsService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String nmEmail) throws UsernameNotFoundException {
-        Usuario usuario = cache.findByNmEmail(nmEmail)
+        public UserDetails loadUserByUsername(String nmEmail) throws UsernameNotFoundException {
+                String emailNormalizado = nmEmail == null ? "" : nmEmail.trim();
+                Usuario usuario = cache.findByNmEmail(emailNormalizado)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
-        return new User(usuario.getNmEmail(), usuario.getNmSenha(),
+                String senhaSemEspacos = usuario.getNmSenha() == null ? "" : usuario.getNmSenha().trim();
+                return new User(usuario.getNmEmail(), senhaSemEspacos,
                 usuario.getFuncoes().stream()
                         .map(funcao -> new SimpleGrantedAuthority(funcao.getNmFuncao().toString()))
                         .collect(Collectors.toList()));

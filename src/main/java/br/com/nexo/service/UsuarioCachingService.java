@@ -39,7 +39,7 @@ public class UsuarioCachingService {
         return repUsuario.findAll(req);
     }
 
-    @CacheEvict(value = { "usuariosAll", "usuariosById", "usuariosPage" }, allEntries = true)
+    @CacheEvict(value = { "usuariosAll", "usuariosById", "usuariosPage", "usuarioByEmail" }, allEntries = true)
     public void limparCache() {
         System.out.println("Limpando cache de usuarios!");
     }

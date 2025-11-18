@@ -9,6 +9,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -23,7 +24,8 @@ import br.com.nexo.validation.ValidationGroups;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TB_NX_USUARIO_GEN")
+    @SequenceGenerator(name = "SEQ_TB_NX_USUARIO_GEN", sequenceName = "SEQ_TB_NX_USUARIO", allocationSize = 1)
     @Column(name = "id_usuario")
     private Long idUsuario;
 

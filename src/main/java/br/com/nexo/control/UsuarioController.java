@@ -21,6 +21,7 @@ import br.com.nexo.model.Funcao;
 import br.com.nexo.model.Usuario;
 import br.com.nexo.repository.FuncaoRepository;
 import br.com.nexo.repository.UsuarioRepository;
+import br.com.nexo.service.UsuarioCachingService;
 
 @Controller
 public class UsuarioController {
@@ -33,6 +34,9 @@ public class UsuarioController {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private UsuarioCachingService cache;
 
     @GetMapping("/usuario/lista")
     public ModelAndView listarUsuarios() {
@@ -71,6 +75,7 @@ public class UsuarioController {
         }
         usuario.setFuncoes(funcoes);
         repUsuario.save(usuario);
+        cache.limparCache();
         return new ModelAndView("redirect:/usuario/lista");
     }
 
@@ -111,12 +116,14 @@ public class UsuarioController {
         }
         usuario.setFuncoes(funcoes);
         repUsuario.save(usuario);
+        cache.limparCache();
         return new ModelAndView("redirect:/usuario/lista");
     }
 
     @GetMapping("/usuario/excluir/{id}")
     public ModelAndView removerUsuarioExistente(@PathVariable Long id) {
         repUsuario.deleteById(id);
+        cache.limparCache();
         return new ModelAndView("redirect:/usuario/lista");
     }
 }

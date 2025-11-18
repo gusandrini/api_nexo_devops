@@ -1,16 +1,79 @@
 :root{
     --nexo-blue: #0033ff;
     --nexo-dark: #001f7a;
-    --nexo-accent: #ff4d4d;
+    --nexo-red: #ff2b2b;
+    --nexo-yellow: #f3d33b;
+    --nexo-green: #18d356;
+    --nexo-accent: #7a5cff; /* violet accent for glow */
 }
 body{ background: linear-gradient(180deg,#f7f9ff 0%, #ffffff 100%); color:#222; }
 .nexo-header{ background: linear-gradient(90deg,var(--nexo-blue), var(--nexo-dark)); padding:0.5rem 0; }
 .nexo-logo{ height:48px; }
 .nexo-container{ background:#fff; padding:1rem; border-radius:8px; box-shadow:0 6px 18px rgba(10,20,60,0.06); }
-.btn-nexo{ background:var(--nexo-blue); color:#fff; border-color:var(--nexo-blue); }
-.btn-nexo:hover{ background:var(--nexo-dark); border-color:var(--nexo-dark); }
+.btn-nexo{ 
+    background: var(--nexo-blue);
+    color:#fff; border:0; 
+    box-shadow: 0 4px 16px rgba(0,51,255,0.18);
+}
+.btn-nexo:hover{ background: var(--nexo-dark); box-shadow: 0 6px 22px rgba(0,51,255,0.28); }
 .table thead th{ background: linear-gradient(90deg,var(--nexo-blue), var(--nexo-dark)); color:#fff; }
 .form-text{ color:#666; }
 .header-title{ color:#fff; font-weight:700; margin-left:12px; }
 
 @media(max-width:576px){ .nexo-logo{ height:38px; } }
+
+/* Login page */
+body.login-page{
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 600px at -10% -10%, rgba(0,51,255,0.18), transparent 60%),
+      radial-gradient(900px 500px at 110% 0%, rgba(24,211,86,0.18), transparent 60%),
+      linear-gradient(135deg, #0b1034 0%, #0a0f2b 35%, #060b1f 100%);
+    color:#e9eeff;
+}
+.login-wrapper{ min-height: 100vh; display:flex; align-items:center; justify-content:center; }
+.login-box{
+    width:100%; max-width: 460px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.96);
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.25),
+        0 0 0 1px rgba(0,51,255,0.08),
+        0 0 40px rgba(122,92,255,0.12);
+}
+.login-logo{ height: 90px; }
+.brand-gradient-text{
+    background: none;
+    -webkit-background-clip: initial; background-clip: initial;
+    color: var(--nexo-blue);
+}
+.login-page .form-control{
+    border-radius: 10px;
+    border-color: #dbe1ff;
+}
+.login-page .form-control:focus{
+    border-color: var(--nexo-blue);
+    box-shadow: 0 0 0 0.25rem rgba(0,51,255,0.20);
+}
+.login-page .alert{ border-radius: 12px; }
+
+/* Error / Access denied page */
+body.error-page{
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 600px at -10% -10%, rgba(0,51,255,0.08), transparent 60%),
+      radial-gradient(900px 500px at 110% 0%, rgba(24,211,86,0.08), transparent 60%),
+      linear-gradient(135deg, #f7f9ff 0%, #ffffff 100%);
+}
+.error-wrapper{ min-height: calc(100vh - 84px); display:flex; align-items:center; justify-content:center; }
+.error-card{
+    width:100%; max-width: 760px;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08),
+        0 0 0 1px rgba(0,51,255,0.06);
+}
+.badge-403{ background: linear-gradient(90deg,var(--nexo-blue), var(--nexo-dark)); color:#fff; border-radius:999px; padding:.4rem .8rem; font-weight:700; }
+.btn-outline-nexo{ color: var(--nexo-blue); border:1px solid var(--nexo-blue); background: transparent; }
+.btn-outline-nexo:hover{ color:#fff; background: var(--nexo-blue); border-color: var(--nexo-blue); }
