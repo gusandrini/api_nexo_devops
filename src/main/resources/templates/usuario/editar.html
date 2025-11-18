@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragmentos :: head('Editar Usuário - NEXO')"></head>
+<head th:replace="~{fragmentos :: head(title='Editar Usuário - NEXO')}"></head>
 <body class="p-4">
-<div th:replace="fragmentos :: header('Editar Usuário')"></div>
+<div th:replace="~{fragmentos :: header(title='Editar Usuário')}"></div>
 <div class="container">
     <div class="nexo-container">
     <h1>Editar Usuário</h1>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head(title='Editar Descrição - NEXO')}"></head>
+<body class="p-4">
+<div th:replace="~{fragmentos :: header(title='Editar Descrição')}"></div>
+
+<div class="container">
+    <div class="nexo-container">
+        <h1>Editar Descrição</h1>
+
+        <form th:action="@{/descricao-clientes/editar}" th:object="${descricaoCliente}" method="post">
+            <input type="hidden" th:field="*{idDescricao}" />
+
+            <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
+                <p><strong>Erros no formulário:</strong></p>
+                <ul>
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Área</label>
+                <input type="text" th:field="*{nmArea}" class="form-control" />
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Usuário</label>
+                    <select name="idUsuario" class="form-select">
+                        <option value="" th:text="'-- selecione --'"></option>
+                        <option th:each="u : ${lista_usuarios}" th:value="${u.idUsuario}" th:text="${u.nmCliente}"
+                                th:selected="${descricaoCliente.usuario != null and descricaoCliente.usuario.idUsuario == u.idUsuario}"></option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Ocupação</label>
+                    <select name="idOcupacao" class="form-select">
+                        <option value="" th:text="'-- selecione --'"></option>
+                        <option th:each="oc : ${lista_ocupacoes}" th:value="${oc.idOcupacao}" th:text="${oc.nmOcupacao}"
+                                th:selected="${descricaoCliente.ocupacao != null and descricaoCliente.ocupacao.idOcupacao == oc.idOcupacao}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Campo de Estudo</label>
+                    <select name="idCampoEstudo" class="form-select">
+                        <option value="" th:text="'-- selecione --'"></option>
+                        <option th:each="c : ${lista_campos}" th:value="${c.idCampoEstudo}" th:text="${c.nmCampoEstudo}"
+                                th:selected="${descricaoCliente.campoEstudo != null and descricaoCliente.campoEstudo.idCampoEstudo == c.idCampoEstudo}"></option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Gênero</label>
+                    <select name="idGenero" class="form-select">
+                        <option value="" th:text="'-- selecione --'"></option>
+                        <option th:each="g : ${lista_generos}" th:value="${g.idGenero}" th:text="${g.nmGenero}"
+                                th:selected="${descricaoCliente.genero != null and descricaoCliente.genero.idGenero == g.idGenero}"></option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Nível educacional</label>
+                    <select name="idNivelEducacional" class="form-select">
+                        <option value="" th:text="'-- selecione --'"></option>
+                        <option th:each="n : ${lista_niveis}" th:value="${n.idNivelEducacional}" th:text="${n.nmNivelEducacional}"
+                                th:selected="${descricaoCliente.nivelEducacional != null and descricaoCliente.nivelEducacional.idNivelEducacional == n.idNivelEducacional}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Influência familiar</label>
+                <select name="idInfluenciaFamiliar" class="form-select">
+                    <option value="" th:text="'-- selecione --'"></option>
+                    <option th:each="i : ${lista_influencias}" th:value="${i.idInfluenciaFamiliar}" th:text="${i.nmInfluenciaFamiliar}"
+                            th:selected="${descricaoCliente.influenciaFamiliar != null and descricaoCliente.influenciaFamiliar.idInfluenciaFamiliar == i.idInfluenciaFamiliar}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Anos de experiência</label>
+                <input type="number" th:field="*{qtdaAnosExperiencia}" class="form-control" min="0" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Satisfação (1-5)</label>
+                <input type="number" th:field="*{dsSatisfacao}" class="form-control" min="0" max="5" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Tecnologia (1-5)</label>
+                <input type="number" th:field="*{dsTecnologia}" class="form-control" min="0" max="5" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mudança (1-5)</label>
+                <input type="number" th:field="*{dsMudanca}" class="form-control" min="0" max="5" />
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a th:href="@{/descricao-clientes/lista}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

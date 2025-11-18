@@ -3,8 +3,9 @@ package br.com.nexo.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.nexo.model.Funcao;
+import br.com.nexo.model.Predicao;
 
 @Repository
-public interface FuncaoRepository extends JpaRepository<Funcao, Long> {
+public interface PredicaoRepository extends JpaRepository<Predicao, Long> {
+
 }

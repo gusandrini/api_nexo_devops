@@ -11,17 +11,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.nexo.model.Usuario;
-import br.com.nexo.repository.UsuarioRepository;
 
 @Service
 public class UsuarioDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UsuarioRepository repU;
+	@Autowired
+	private UsuarioCachingService cache;
+
 
     @Override
     public UserDetails loadUserByUsername(String nmEmail) throws UsernameNotFoundException {
-        Usuario usuario = repU.findByNmEmail(nmEmail)
+        Usuario usuario = cache.findByNmEmail(nmEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
         return new User(usuario.getNmEmail(), usuario.getNmSenha(),

@@ -24,7 +24,7 @@ public class UsuarioDTO{
     private String nmEmail;
 
     @NotBlank
-    @Size(max = 20)
+    @Size(max = 100)
     private String nmSenha;
 
     private Set<FuncaoDTO> funcoes = new HashSet<>();

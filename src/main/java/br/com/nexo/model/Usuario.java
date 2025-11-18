@@ -38,9 +38,9 @@ public class Usuario {
     @Size(max = 80)
     private String nmEmail;
 
-    @Column(name = "nm_senha", length = 20, nullable = false)
+    @Column(name = "nm_senha", length = 100, nullable = false)
     @NotBlank(groups = ValidationGroups.Create.class)
-    @Size(max = 20)
+    @Size(max = 100)
     private String nmSenha;
 
     @ManyToMany(fetch = FetchType.EAGER)

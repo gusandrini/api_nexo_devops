@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head(title='Home - NEXO')}"></head>
+<body>
+    <div th:replace="~{fragmentos :: header(title='Home - NEXO')}"></div>
+    <div class="container d-flex flex-column align-items-center justify-content-center" style="min-height: 90vh;">
+
+        <h1 class="mb-5 mt-3 text-center">Menu Principal</h1>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+        <div class="row w-100 justify-content-center g-4">
+            <div class="col-12 col-md-5 col-lg-3 d-flex justify-content-center">
+                <a class="btn btn-primary btn-lg w-100 shadow" th:href="@{/usuario/lista}">
+                    <i class="bi bi-people-fill me-2"></i> <span>Usuários</span>
+                </a>
+            </div>
+            <div class="col-12 col-md-5 col-lg-3 d-flex justify-content-center">
+                <a class="btn btn-success btn-lg w-100 shadow" th:href="@{/descricao-clientes/lista}">
+                    <i class="bi bi-person-lines-fill me-2"></i> <span>Descrição Cliente</span>
+                </a>
+            </div>
+            <div class="col-12 col-md-5 col-lg-3 d-flex justify-content-center">
+                <a class="btn btn-warning btn-lg w-100 shadow" th:href="@{/predicoes/lista}">
+                    <i class="bi bi-bar-chart-line-fill me-2"></i> <span>Predições</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="row mt-5 w-100 justify-content-center">
+            <div class="col-12 col-md-8">
+                <div class="alert alert-light text-center shadow-sm">
+                    <strong>Dica:</strong> Você pode cadastrar, editar, visualizar ou excluir registros em cada módulo.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous">
+    </script>
+</body>
+</html>

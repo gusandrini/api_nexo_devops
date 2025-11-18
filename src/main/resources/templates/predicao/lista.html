@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head(title='Predictions - NEXO')}"></head>
+<body class="p-4">
+<div th:replace="~{fragmentos :: header(title='Predições')}"></div>
+
+<div class="container">
+    <div class="nexo-container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Predições</h1>
+            <a class="btn btn-primary" th:href="@{/predicoes/novo}">Nova predição</a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descrição ID</th>
+                    <th>Resultado</th>
+                    <th>Recomendação</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${predicoes}">
+                    <td th:text="${p.idPredicao}">1</td>
+                    <td th:text="${p.descricaoCliente != null ? p.descricaoCliente.idDescricao : ''}">0</td>
+                    <td th:text="${p.dsResultadoPredicao}">0</td>
+                    <td th:text="${p.dsRecomendacao}">Recomenda</td>
+                    <td>
+                        <a th:href="@{'/predicoes/editar'(id=${p.idPredicao})}" class="btn btn-sm btn-secondary">Editar</a>
+                        <a th:href="@{'/predicoes/excluir/' + ${p.idPredicao}}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir?');">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
