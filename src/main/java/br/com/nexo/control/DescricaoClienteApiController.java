@@ -14,7 +14,6 @@ import jakarta.validation.Valid;
 import br.com.nexo.dto.DescricaoClienteDTO;
 import br.com.nexo.model.CampoEstudo;
 import br.com.nexo.model.DescricaoCliente;
-import br.com.nexo.model.Genero;
 import br.com.nexo.model.InfluenciaFamiliar;
 import br.com.nexo.model.NivelEducacional;
 import br.com.nexo.model.Ocupacao;
@@ -23,7 +22,6 @@ import br.com.nexo.repository.DescricaoClienteRepository;
 import br.com.nexo.repository.OcupacaoRepository;
 import br.com.nexo.repository.UsuarioRepository;
 import br.com.nexo.repository.CampoEstudoRepository;
-import br.com.nexo.repository.GeneroRepository;
 import br.com.nexo.repository.NivelEducacionalRepository;
 import br.com.nexo.repository.InfluenciaFamiliarRepository;
 
@@ -44,9 +42,6 @@ public class DescricaoClienteApiController {
     @Autowired
     private CampoEstudoRepository repCampoEstudo;
     
-    @Autowired
-    private GeneroRepository repGenero;
-
     @Autowired
     private NivelEducacionalRepository repNivelEducacional;
 
@@ -83,10 +78,7 @@ public class DescricaoClienteApiController {
         }
         if (dto.getIdCampoEstudo() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idCampoEstudo é obrigatório");
-        }
-        if (dto.getIdGenero() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idGenero é obrigatório");
-        }
+        }       
         if (dto.getIdNivelEducacional() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idNivelEducacional é obrigatório");
         }
@@ -96,16 +88,14 @@ public class DescricaoClienteApiController {
         Ocupacao ocup = repOcupacao.findById(dto.getIdOcupacao())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ocupação não encontrada"));
         desc.setOcupacao(ocup);
-        br.com.nexo.model.CampoEstudo campo = repCampoEstudo.findById(dto.getIdCampoEstudo())
+        CampoEstudo campo = repCampoEstudo.findById(dto.getIdCampoEstudo())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Campo de estudo não encontrado"));
         desc.setCampoEstudo(campo);
-        br.com.nexo.model.Genero genero = repGenero.findById(dto.getIdGenero())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gênero não encontrado"));
-        desc.setGenero(genero);
-        br.com.nexo.model.NivelEducacional nivel = repNivelEducacional.findById(dto.getIdNivelEducacional())
+        
+        NivelEducacional nivel = repNivelEducacional.findById(dto.getIdNivelEducacional())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nível educacional não encontrado"));
         desc.setNivelEducacional(nivel);
-        br.com.nexo.model.InfluenciaFamiliar influencia = repInfluenciaFamiliar.findById(dto.getIdInfluenciaFamiliar())
+        InfluenciaFamiliar influencia = repInfluenciaFamiliar.findById(dto.getIdInfluenciaFamiliar())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Influência familiar não encontrada"));
         desc.setInfluenciaFamiliar(influencia);
         desc.setQtdaAnosExperiencia(dto.getQtdaAnosExperiencia());
@@ -139,12 +129,7 @@ public class DescricaoClienteApiController {
             CampoEstudo campo = repCampoEstudo.findById(dto.getIdCampoEstudo())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Campo de estudo não encontrado"));
             desc.setCampoEstudo(campo);
-        }
-        if (dto.getIdGenero() != null) {
-            Genero genero = repGenero.findById(dto.getIdGenero())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gênero não encontrado"));
-            desc.setGenero(genero);
-        }
+        }        
         if (dto.getIdNivelEducacional() != null) {
             NivelEducacional nivel = repNivelEducacional.findById(dto.getIdNivelEducacional())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nível educacional não encontrado"));

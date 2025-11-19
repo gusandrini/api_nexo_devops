@@ -8,18 +8,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_nx_influencia_familiar")
+@Table(name = "tb_nx_influencia_fam")
 public class InfluenciaFamiliar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_influencia_familiar")
+    @Column(name = "id_nivel_influencia")
     private Long idInfluenciaFamiliar;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "nm_influencia_familiar", length = 50)
+    @Column(name = "nm_nivel_influencia", length = 50, nullable = false)
+    @NotNull
     private EnumInfluenciaFamiliar nmInfluenciaFamiliar;
 
     public Long getIdInfluenciaFamiliar() {

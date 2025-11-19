@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head(title='Histórico de Formulários - NEXO')}"></head>
+<body class="user-page">
+    <div th:replace="~{fragmentos :: header(title='Histórico de Formulários')}"></div>
+    <main class="container user-wrapper d-flex flex-column align-items-center justify-content-center">
+        <div class="home-logo-wrap text-center mb-4 mt-4">
+            <img th:src="@{/images/NEXO.png}" alt="NEXO" class="home-logo" onerror="this.style.display='none'" />
+        </div>
+        <h1 class="user-title mb-3" th:text="#{menu.historico}">Histórico de Formulários Preenchidos</h1>
+        <div class="user-table-wrap w-100" style="max-width: 1100px;">
+            <div th:if="${#lists.isEmpty(descricoes)}" class="alert alert-info mt-4" th:text="#{label.preencha_formulario}">Nenhum formulário preenchido ainda.</div>
+            <div th:if="${!#lists.isEmpty(descricoes)}">
+                <div class="table-responsive">
+                    <table class="table user-table table-bordered table-hover align-middle text-center">
+                        <thead>
+                                <tr>
+                                    <th th:text="#{label.data}">Data</th>
+                                    <th th:text="#{label.nome}">Usuário</th>
+                                    <th th:text="#{label.resultado_ia}">Percentual IA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="desc : ${descricoes}">
+                                <td th:text="${desc.dtInput}"></td>
+                                <td th:text="${desc.usuario != null ? desc.usuario.nmCliente : '-'}"></td>
+                                <td th:text="${desc.ocupacao != null ? desc.ocupacao.nmOcupacao : '-'}"></td>
+                                <td th:text="${desc.campoEstudo != null ? desc.campoEstudo.nmCampoEstudo : '-'}"></td>
+                                <td>
+                                    <div th:if="${predicoes[desc.idDescricao] != null}">
+                                        <span th:text="${predicoes[desc.idDescricao].dsResultadoPredicao} + '%'"
+                                              style="font-weight:bold; color:#007bff;"></span>
+                                        <div class="progress my-1" style="height: 18px;">
+                                            <div class="progress-bar bg-info" role="progressbar"
+                                                 th:style="'width: ' + ${predicoes[desc.idDescricao].dsResultadoPredicao} + '%'"
+                                                 th:text="${predicoes[desc.idDescricao].dsResultadoPredicao} + '%'"
+                                                 aria-valuenow="${predicoes[desc.idDescricao].dsResultadoPredicao}"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <span th:if="${predicoes[desc.idDescricao] == null}" class="text-muted">-</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <a th:href="@{/}" class="btn btn-outline-nexo" th:text="#{menu.home}">Voltar para Home</a>
+        </div>
+    </main>
+</body>
+</html>

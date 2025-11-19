@@ -1,3 +1,30 @@
+.user-page {
+        min-height: 100vh;
+        background:
+            radial-gradient(1200px 600px at -10% -10%, rgba(0,51,255,0.10), transparent 60%),
+            radial-gradient(900px 500px at 110% 0%, rgba(24,211,86,0.10), transparent 60%),
+            linear-gradient(135deg, #f7f9ff 0%, #ffffff 100%);
+        color: #222;
+}
+.user-wrapper { min-height: 90vh; }
+.user-title { font-size: 2rem; font-weight: 800; color: var(--nexo-blue); letter-spacing: -1px; }
+.user-header { border-bottom: 2px solid #e3e8ff; padding-bottom: 0.7rem; margin-bottom: 2.2rem; }
+.user-form-card {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 6px 24px rgba(0,51,255,0.08);
+        padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+        max-width: 480px;
+        width: 100%;
+}
+.user-table-wrap { background: #fff; border-radius: 18px; box-shadow: 0 6px 24px rgba(0,51,255,0.08); padding: 1.5rem 1rem; }
+.user-table th { font-weight: 700; color: var(--nexo-blue); border-bottom: 2px solid #e3e8ff; background: #f7f9ff; }
+.user-table td { vertical-align: middle; }
+.badge.bg-nexo { background: linear-gradient(90deg,var(--nexo-blue), var(--nexo-dark)); color: #fff; font-size: 0.95em; font-weight: 600; border-radius: 8px; padding: 0.3em 0.7em; margin-right: 0.2em; }
+.btn-outline-nexo { color: var(--nexo-blue); border:1.5px solid var(--nexo-blue); background: transparent; }
+.btn-outline-nexo:hover { color:#fff; background: var(--nexo-blue); border-color: var(--nexo-blue); }
+.btn-nexo.btn-lg, .btn-outline-nexo.btn-lg { font-size: 1.15rem; padding: 0.7rem 1.5rem; border-radius: 12px; }
+.form-check-inline { margin-right: 1.2rem; }
 :root{
     --nexo-blue: #0033ff;
     --nexo-dark: #001f7a;
@@ -77,3 +104,57 @@ body.error-page{
 .badge-403{ background: linear-gradient(90deg,var(--nexo-blue), var(--nexo-dark)); color:#fff; border-radius:999px; padding:.4rem .8rem; font-weight:700; }
 .btn-outline-nexo{ color: var(--nexo-blue); border:1px solid var(--nexo-blue); background: transparent; }
 .btn-outline-nexo:hover{ color:#fff; background: var(--nexo-blue); border-color: var(--nexo-blue); }
+
+/* Home dashboard */
+body.home-page {
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 600px at -10% -10%, rgba(0,51,255,0.10), transparent 60%),
+      radial-gradient(900px 500px at 110% 0%, rgba(24,211,86,0.10), transparent 60%),
+      linear-gradient(135deg, #f7f9ff 0%, #ffffff 100%);
+    color: #222;
+}
+.home-wrapper { min-height: 90vh; }
+.home-logo-wrap { margin-bottom: 1.5rem; }
+.home-logo { height: 110px; max-width: 320px; }
+.home-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; color: var(--nexo-blue); }
+.home-subtitle { font-size: 1.15rem; color: var(--nexo-dark); }
+.home-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 100%; max-width: 320px; min-height: 160px;
+    border-radius: 18px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    box-shadow: 0 6px 24px rgba(0,51,255,0.08);
+    text-decoration: none;
+    transition: transform 0.12s, box-shadow 0.12s;
+    gap: 0.7rem;
+    margin-bottom: 0.5rem;
+    background: #fff;
+    border: 3px solid transparent;
+}
+.home-card i {
+    font-size: 2.7rem;
+    margin-bottom: 0.2rem;
+}
+.home-card.card-user { border-color: #3a5cff; background: linear-gradient(120deg,#3a5cff11 0%,#fff 100%); color: #0033ff; }
+.home-card.card-user i { color: #0033ff; }
+.home-card.card-desc { border-color: #ff2b2b; background: linear-gradient(120deg,#ff2b2b11 0%,#fff 100%); color: #ff2b2b; }
+.home-card.card-desc i { color: #ff2b2b; }
+.home-card.card-pred { border-color: #f3d33b; background: linear-gradient(120deg,#f3d33b22 0%,#fff 100%); color: #bfa800; }
+.home-card.card-pred i { color: #bfa800; }
+.home-card:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 12px 32px rgba(0,51,255,0.16);
+    background: #f7f9ff;
+}
+.home-tip {
+    font-size: 1.08rem;
+    color: #555;
+    background: #f7f9ff;
+    border-radius: 12px;
+    padding: 0.7rem 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,51,255,0.06);
+    margin-top: 1.5rem;
+}
+.home-tip i { color: var(--nexo-yellow); font-size: 1.2rem; vertical-align: -2px; }

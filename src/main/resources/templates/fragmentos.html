@@ -25,22 +25,31 @@
     <div th:fragment="header(title)">
         <header class="nexo-header">
             <div class="container d-flex align-items-center gap-3">
-                <a th:href="@{/}" class="d-flex align-items-center">
-                    <img th:src="@{/images/NEXO.png}" alt="NEXO" class="nexo-logo" onerror="this.style.display='none'" />
+                <a th:href="@{/}" class="d-flex align-items-center me-3">
+                    <img th:src="@{/images/NX.png}" alt="NX Logo" class="nexo-logo" style="height:60px;max-height:60px;background:transparent;border-radius:50%;box-shadow:0 2px 12px #b3c6ff;" onerror="this.style.display='none'" />
                 </a>
-                <h1 class="header-title mb-0" th:text="${title}"></h1>
-                <div class="ms-auto d-flex align-items-center gap-2">
+                <div class="d-flex flex-column flex-md-row align-items-center flex-grow-1">
+                    <h1 class="header-title mb-0 flex-grow-1" th:text="${title}" style="font-size:1.5rem;font-weight:900;letter-spacing:1px;color:#1e3c72;text-shadow:0 2px 8px #e0eaff;">Título</h1>
+                </div>
+                <div class="ms-auto d-flex align-items-center gap-3">
                     <form th:action="@{/logout}" method="post"
                           th:if="${T(org.springframework.security.core.context.SecurityContextHolder).getContext().getAuthentication() != null and T(org.springframework.security.core.context.SecurityContextHolder).getContext().getAuthentication().principal != 'anonymousUser'}">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="submit" class="header-logout-btn" title="Sair" aria-label="Sair">
-                            <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
-                            <span class="visually-hidden">Sair</span>
+                        <button type="submit" class="header-logout-btn d-flex align-items-center justify-content-center px-3 py-1 rounded-pill border-0" title="Sair" aria-label="Sair" style="background:linear-gradient(90deg,#1e3c72 0,#ffe066 100%);color:#1e3c72;font-weight:700;box-shadow:0 2px 8px #e0eaff;min-width:40px;min-height:40px;">
+                            <i class="bi bi-box-arrow-right" aria-hidden="true" style="font-size:1.5rem;"></i>
                         </button>
                     </form>
-                    <div>
-                        <a href="#" class="btn btn-link p-0">PT</a>
-                    </div>
+                          <!-- Language Switcher: i18n, visual moderno -->
+                          <div class="d-flex align-items-center gap-2 ms-2 px-2 py-1 rounded" style="background:#fffbe6;border:1px solid #ffe066;box-shadow:0 1px 4px #ffe06633;">
+                                <span class="me-1 small" style="color:#1e3c72;opacity:0.7;" th:text="#{menu.idioma}">Idioma</span>
+                                <a th:href="@{/(lang='pt')}"
+                                    th:classappend="${#locale.language == 'pt'} ? 'fw-bold' : 'text-secondary'"
+                                    class="btn btn-link p-0" style="font-size:1rem;color:#1e3c72;">PT</a>
+                                <span class="mx-1" style="color:#ffe066;">|</span>
+                                <a th:href="@{/(lang='en')}"
+                                    th:classappend="${#locale.language == 'en'} ? 'fw-bold' : 'text-secondary'"
+                                    class="btn btn-link p-0" style="font-size:1rem;color:#1e3c72;">EN</a>
+                          </div>
                 </div>
             </div>
         </header>

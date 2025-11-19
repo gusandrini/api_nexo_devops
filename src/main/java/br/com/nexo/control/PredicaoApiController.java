@@ -23,9 +23,6 @@ public class PredicaoApiController {
     @Autowired
     private PredicaoRepository repPred;
 
-    @Autowired
-    private DescricaoClienteRepository repDesc;
-
     @GetMapping("/todos")
     public List<Predicao> todos() {
         return repPred.findAll();
@@ -36,44 +33,4 @@ public class PredicaoApiController {
         return repPred.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/inserir")
-    public Predicao inserir(@Valid @RequestBody PredicaoDTO dto) {
-        Predicao p = new Predicao();
-        if (dto.getIdDescricao() != null) {
-            DescricaoCliente dc = repDesc.findById(dto.getIdDescricao())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Descrição não encontrada"));
-            p.setDescricaoCliente(dc);
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idDescricao é obrigatório");
-        }
-        p.setDsResultadoPredicao(dto.getDsResultadoPredicao());
-        p.setDsRecomendacao(dto.getDsRecomendacao());
-        repPred.save(p);
-        return p;
-    }
-
-    @PutMapping("/atualizar/{id}")
-    public Predicao atualizar(@Valid @RequestBody PredicaoDTO dto, @PathVariable Long id) {
-        Optional<Predicao> op = repPred.findById(id);
-        if (op.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        Predicao p = op.get();
-        if (dto.getIdDescricao() != null) {
-            DescricaoCliente dc = repDesc.findById(dto.getIdDescricao())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Descrição não encontrada"));
-            p.setDescricaoCliente(dc);
-        }
-        p.setDsResultadoPredicao(dto.getDsResultadoPredicao());
-        p.setDsRecomendacao(dto.getDsRecomendacao());
-        repPred.save(p);
-        return p;
-    }
-
-    @DeleteMapping("/remover/{id}")
-    public Predicao remover(@PathVariable Long id) {
-        Predicao p = repPred.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        repPred.delete(p);
-        return p;
-    }
 }

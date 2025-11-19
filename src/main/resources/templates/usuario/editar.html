@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragmentos :: head(title='Editar Usuário - NEXO')}"></head>
-<body class="p-4">
+<body class="user-page">
 <div th:replace="~{fragmentos :: header(title='Editar Usuário')}"></div>
-<div class="container">
-    <div class="nexo-container">
-    <h1>Editar Usuário</h1>
-    <form th:action="@{/usuario/editar}" th:object="${usuario}" method="post">
-        <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
-            <p><strong>Erros no formulário:</strong></p>
-            <ul>
-                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-            </ul>
-        </div>
-        <input type="hidden" th:field="*{idUsuario}" />
-        <div class="mb-3">
-            <label for="nmCliente" class="form-label">Nome</label>
-            <input type="text" th:field="*{nmCliente}" id="nmCliente" class="form-control" />
-            <div class="text-danger" th:if="${#fields.hasErrors('nmCliente')}" th:errors="*{nmCliente}"></div>
-        </div>
-        <div class="mb-3">
-            <label for="nmEmail" class="form-label">Email</label>
-            <input type="email" th:field="*{nmEmail}" id="nmEmail" class="form-control" />
-            <div class="text-danger" th:if="${#fields.hasErrors('nmEmail')}" th:errors="*{nmEmail}"></div>
-        </div>
-        <div class="mb-3">
-            <label for="nmSenha" class="form-label">Senha (preencha apenas para alterar)</label>
-            <input type="password" th:field="*{nmSenha}" id="nmSenha" class="form-control" />
-            <div class="text-danger" th:if="${#fields.hasErrors('nmSenha')}" th:errors="*{nmSenha}"></div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Funções</label>
-            <div class="form-check" th:each="f : ${lista_funcoes}">
-                <input class="form-check-input" type="checkbox" th:id="${'funcao-' + f.idFuncao}" th:name="'id_funcao'" th:value="${f.idFuncao}"
-                       th:checked="${#lists.contains(usuario.funcoes, f)}" />
-                <label class="form-check-label" th:for="${'funcao-' + f.idFuncao}" th:text="${f.nmFuncao}">ROLE_USER</label>
+<main class="container user-wrapper py-4">
+    <div class="user-form-card mx-auto">
+        <h1 class="user-title mb-4"><i class="bi bi-pencil-square me-2"></i><span th:text="#{label.editar_usuario}">Editar Usuário</span></h1>
+        <form th:action="@{/usuario/editar}" th:object="${usuario}" method="post" autocomplete="off">
+            <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
+                <p><strong th:text="#{label.preencha_formulario}">Erros no formulário:</strong></p>
+                <ul>
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
             </div>
-            <div class="form-text">Marque uma ou mais funções.</div>
-        </div>
-        <button type="submit" class="btn btn-primary">Salvar</button>
-        <a th:href="@{/usuario/lista}" class="btn btn-secondary">Cancelar</a>
-    </form>
-</div>
+            <input type="hidden" th:field="*{idUsuario}" />
+            <div class="mb-3">
+                <label for="nmCliente" class="form-label" th:text="#{label.nome}">Nome</label>
+                <input type="text" th:field="*{nmCliente}" id="nmCliente" class="form-control" placeholder="Nome completo" />
+                <div class="text-danger" th:if="${#fields.hasErrors('nmCliente')}" th:errors="*{nmCliente}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="nmEmail" class="form-label" th:text="#{label.email}">Email</label>
+                <input type="email" th:field="*{nmEmail}" id="nmEmail" class="form-control" placeholder="email@exemplo.com" />
+                <div class="text-danger" th:if="${#fields.hasErrors('nmEmail')}" th:errors="*{nmEmail}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="nmSenha" class="form-label">Senha <span class="text-muted">(preencha apenas para alterar)</span></label>
+                <input type="password" th:field="*{nmSenha}" id="nmSenha" class="form-control" placeholder="********" />
+                <div class="text-danger" th:if="${#fields.hasErrors('nmSenha')}" th:errors="*{nmSenha}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" th:text="#{label.funcoes}">Funções</label>
+                <div class="form-check form-check-inline" th:each="f : ${lista_funcoes}">
+                    <input class="form-check-input" type="checkbox" th:id="${'funcao-' + f.idFuncao}" th:name="'id_funcao'" th:value="${f.idFuncao}"
+                           th:checked="${#lists.contains(usuario.funcoes, f)}" />
+                    <label class="form-check-label" th:for="${'funcao-' + f.idFuncao}" th:text="${f.nmFuncao}">ROLE_USER</label>
+                </div>
+                <div class="form-text" th:text="#{label.marque_funcoes}">Marque uma ou mais funções.</div>
+            </div>
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-nexo btn-lg"><i class="bi bi-check2-circle me-2"></i><span th:text="#{label.salvar}">Salvar</span></button>
+                <a th:href="@{/usuario/lista}" class="btn btn-outline-nexo btn-lg"><i class="bi bi-x-circle me-2"></i><span th:text="#{label.cancelar}">Cancelar</span></a>
+            </div>
+        </form>
+    </div>
+</main>
 </body>
 </html>

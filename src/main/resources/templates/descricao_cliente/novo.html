@@ -6,31 +6,26 @@
 
 <div class="container">
     <div class="nexo-container">
-        <h1>Nova Descrição</h1>
 
-        <form th:action="@{/descricao-clientes/novo}" th:object="${descricaoCliente}" method="post">
+        <h1 th:text="#{menu.nova_descricao}">Nova Descrição</h1>
+        <!-- Mensagem de erro da IA -->
+        <div th:if="${erroPredicao != null}" class="alert alert-danger text-center my-2">
+            <span th:text="#{label.erro_predicao}"></span>
+        </div>
+
+        <form th:action="@{/descricao-clientes/novo}" th:object="${descricaoCliente}" method="post" class="nexo-container user-form-card mx-auto mt-4 mb-5 shadow">
+            <div class="text-center mb-4">
+                <img th:src="@{/images/NEXO.png}" alt="NEXO" class="nexo-logo mb-2" style="height:64px;filter:drop-shadow(0 0 8px #00bcd4);" onerror="this.style.display='none'" />
+            </div>
             <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
-                <p><strong>Erros no formulário:</strong></p>
+                <p><strong th:text="#{label.preencha_formulario}">Erros no formulário:</strong></p>
                 <ul>
                     <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
                 </ul>
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">Área</label>
-                <input type="text" th:field="*{nmArea}" class="form-control" />
-            </div>
-
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Usuário</label>
-                    <select name="idUsuario" class="form-select">
-                        <option value="" th:text="'-- selecione --'"></option>
-                        <option th:each="u : ${lista_usuarios}" th:value="${u.idUsuario}" th:text="${u.nmCliente}"></option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label">Ocupação</label>
+                    <label class="form-label" th:text="#{label.ocupacao}">Ocupação</label>
                     <select name="idOcupacao" class="form-select">
                         <option value="" th:text="'-- selecione --'"></option>
                         <option th:each="oc : ${lista_ocupacoes}" th:value="${oc.idOcupacao}" th:text="${oc.nmOcupacao}"></option>
@@ -39,22 +34,15 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label class="form-label">Campo de Estudo</label>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" th:text="#{label.campo_estudo}">Campo de Estudo</label>
                     <select name="idCampoEstudo" class="form-select">
                         <option value="" th:text="'-- selecione --'"></option>
                         <option th:each="c : ${lista_campos}" th:value="${c.idCampoEstudo}" th:text="${c.nmCampoEstudo}"></option>
                     </select>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <label class="form-label">Gênero</label>
-                    <select name="idGenero" class="form-select">
-                        <option value="" th:text="'-- selecione --'"></option>
-                        <option th:each="g : ${lista_generos}" th:value="${g.idGenero}" th:text="${g.nmGenero}"></option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label class="form-label">Nível educacional</label>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" th:text="#{label.nivel_educacional}">Nível educacional</label>
                     <select name="idNivelEducacional" class="form-select">
                         <option value="" th:text="'-- selecione --'"></option>
                         <option th:each="n : ${lista_niveis}" th:value="${n.idNivelEducacional}" th:text="${n.nmNivelEducacional}"></option>
@@ -62,39 +50,55 @@
                 </div>
             </div>
 
+
             <div class="mb-3">
-                <label class="form-label">Influência familiar</label>
+                <label class="form-label" th:text="#{label.influencia_familiar}">Influência familiar</label>
                 <select name="idInfluenciaFamiliar" class="form-select">
                     <option value="" th:text="'-- selecione --'"></option>
                     <option th:each="i : ${lista_influencias}" th:value="${i.idInfluenciaFamiliar}" th:text="${i.nmInfluenciaFamiliar}"></option>
                 </select>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Anos de experiência</label>
-                <input type="number" th:field="*{qtdaAnosExperiencia}" class="form-control" min="0" />
-            </div>
 
             <div class="mb-3">
-                <label class="form-label">Satisfação (1-5)</label>
+                <label class="form-label" th:text="#{label.anos_experiencia}">Anos de experiência</label>
+                <input type="number" th:field="*{qtdaAnosExperiencia}" class="form-control" min="0" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" th:text="#{label.satisfacao}">Satisfação (1-5)</label>
                 <input type="number" th:field="*{dsSatisfacao}" class="form-control" min="0" max="5" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Tecnologia (1-5)</label>
+                <label class="form-label" th:text="#{label.tecnologia}">Tecnologia (1-5)</label>
                 <input type="number" th:field="*{dsTecnologia}" class="form-control" min="0" max="5" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Mudança (1-5)</label>
+                <label class="form-label" th:text="#{label.mudanca}">Mudança (1-5)</label>
                 <input type="number" th:field="*{dsMudanca}" class="form-control" min="0" max="5" />
             </div>
 
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">Salvar</button>
-                <a th:href="@{/descricao-clientes/lista}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-nexo" th:text="#{label.salvar}">Salvar</button>
+                <a th:href="@{/}" class="btn btn-outline-nexo" th:text="#{label.cancelar}">Cancelar</a>
             </div>
         </form>
+
+        <!-- Barra de porcentagem bonita e funcional -->
+        <div class="nexo-pred-bar-container mt-4 mb-2 p-3 text-center" style="background: linear-gradient(90deg, #e0f7fa 0%, #b2ebf2 100%); border-radius: 18px; box-shadow: 0 2px 12px #00bcd433; max-width: 500px; margin: 0 auto;">
+            <div style="font-size:1.1em; color:#0097a7; font-weight:600; letter-spacing:0.5px;" th:text="#{label.resultado_ia}">Probabilidade de Mudança (IA)</div>
+            <div class="progress my-3" style="height: 32px; border-radius: 16px; background: #b2ebf2;">
+                <div class="progress-bar" role="progressbar"
+                     th:style="'width: ' + (${percentual != null ? percentual : 0}) + '%; background: linear-gradient(90deg, #00bcd4 0%, #0097a7 100%); font-size:1.3em; font-weight: bold;'"
+                     th:text="${percentual != null ? percentual + '%': '0%'}"
+                     th:attr="aria-valuenow=${percentual != null ? percentual : 0}"
+                     aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div style="color:#00796b; font-size:1.2em; font-weight:500;">
+                <span th:text="${percentual != null ? percentual + '%': '0%'}"></span>
+            </div>
+        </div>
     </div>
 </div>
 

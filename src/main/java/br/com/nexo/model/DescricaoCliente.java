@@ -12,7 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TB_NX_DESCRICAO_CLIENTE")
@@ -25,46 +25,48 @@ public class DescricaoCliente {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
+    @NotNull
     private Usuario usuario;
-
-    @Column(name = "nm_area", length = 30)
-    @Size(max = 30)
-    private String nmArea;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ocupacao")
+    @NotNull
     private Ocupacao ocupacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_campo_estudo")
+    @NotNull
     private CampoEstudo campoEstudo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_genero")
-    private Genero genero;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_nivel_educacional")
+    @JoinColumn(name = "id_nivel_educacao")
+    @NotNull
     private NivelEducacional nivelEducacional;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_influencia_familiar")
+    @JoinColumn(name = "id_nivel_influencia")
+    @NotNull
     private InfluenciaFamiliar influenciaFamiliar;
 
-    @Column(name = "qtda_anos_experiencia")
+    @Column(name = "qtde_anos_experiencia", nullable = false)
+    @NotNull
     @Min(0)
     private Integer qtdaAnosExperiencia;
 
-    @Column(name = "ds_satisfacao")
+    @Column(name = "ds_satisfacao", nullable = false)
+    @NotNull
     private Integer dsSatisfacao;
 
-    @Column(name = "ds_tecnologia")
+    @Column(name = "ds_tecnologia", nullable = false)
+    @NotNull
     private Integer dsTecnologia;
 
-    @Column(name = "ds_mudanca")
+    @Column(name = "ds_mudanca", nullable = false)
+    @NotNull
     private Integer dsMudanca;
 
-    @Column(name = "dt_input")
+    @Column(name = "dt_input", nullable = false)
+    @NotNull
     private LocalDateTime dtInput;
 
     public DescricaoCliente() {
@@ -86,14 +88,6 @@ public class DescricaoCliente {
         this.usuario = usuario;
     }
 
-    public String getNmArea() {
-        return nmArea;
-    }
-
-    public void setNmArea(String nmArea) {
-        this.nmArea = nmArea;
-    }
-
     public Ocupacao getOcupacao() {
         return ocupacao;
     }
@@ -108,14 +102,6 @@ public class DescricaoCliente {
 
     public void setCampoEstudo(CampoEstudo campoEstudo) {
         this.campoEstudo = campoEstudo;
-    }
-
-    public Genero getGenero() {
-        return genero;
-    }
-
-    public void setGenero(Genero genero) {
-        this.genero = genero;
     }
 
     public NivelEducacional getNivelEducacional() {

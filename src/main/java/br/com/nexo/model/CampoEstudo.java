@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "TB_NX_CAMPO_ESTUDO")
@@ -16,7 +18,9 @@ public class CampoEstudo {
     @Column(name = "id_campo_estudo")
     private Long idCampoEstudo;
 
-    @Column(name = "nm_campo_estudo", length = 100)
+    @Column(name = "nm_campo_estudo", length = 100, nullable = false)
+    @NotBlank
+    @Size(max = 100)
     private String nmCampoEstudo;
 
     public Long getIdCampoEstudo() {

@@ -1,40 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragmentos :: head(title='Usuários - NEXO')}"></head>
-<body class="p-4">
+<body class="user-page">
 <div th:replace="~{fragmentos :: header(title='Usuários')}"></div>
-<div class="container">
-    <div class="nexo-container">
-    <h1>Usuários</h1>
-    <div class="mb-3">
-        <a class="btn btn-primary" th:href="@{/usuario/novo}">Novo usuário</a>
+<main class="container user-wrapper py-4">
+    <div class="user-header d-flex flex-column flex-md-row align-items-center justify-content-between mb-4">
+        <h1 class="user-title mb-3 mb-md-0"><i class="bi bi-people-fill me-2"></i><span th:text="#{label.lista_usuarios}">Usuários</span></h1>
+        <a class="btn btn-nexo btn-lg" th:href="@{/usuario/novo}"><i class="bi bi-person-plus-fill me-2"></i><span th:text="#{label.novo_usuario}">Novo usuário</span></a>
     </div>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Funções</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="u : ${usuarios}">
-                <td th:text="${u.idUsuario}">1</td>
-                <td th:text="${u.nmCliente}">Nome</td>
-                <td th:text="${u.nmEmail}">email@exemplo.com</td>
-                <td>
-                    <span th:each="f : ${u.funcoes}" th:text="${f.nmFuncao}">ROLE_USER</span>
-                </td>
-                <td>
-                    <a th:href="@{'/usuario/editar'(id=${u.idUsuario})}" class="btn btn-sm btn-secondary">Editar</a>
-                    <a th:href="@{'/usuario/excluir/' + ${u.idUsuario}}" class="btn btn-sm btn-danger" onclick="return confirm('Excluir usuário?');">Excluir</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="user-table-wrap">
+        <table class="table table-hover align-middle user-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="u : ${usuarios}">
+                    <td th:text="${u.idUsuario}">1</td>
+                    <td th:text="${u.nmCliente}">Nome</td>
+                    <td th:text="${u.nmEmail}">email@exemplo.com</td>
+                    <td>
+                    </td>
+                    <td class="text-center">
+                        <a th:href="@{'/usuario/editar'(id=${u.idUsuario})}" class="btn btn-outline-nexo btn-sm me-1"><i class="bi bi-pencil-square"></i></a>
+                        <a th:href="@{'/usuario/excluir/' + ${u.idUsuario}}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Excluir usuário?');"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
 </body>
 </html>
