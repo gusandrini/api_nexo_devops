@@ -72,7 +72,7 @@ public class DescricaoClienteApiController {
         Usuario usuario = repUsuario.findById(dto.getIdUsuario())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         desc.setUsuario(usuario);
-        // idOcupacao, idCampoEstudo e idGenero são obrigatórios agora (códigos que o modelo espera)
+        
         if (dto.getIdOcupacao() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idOcupacao é obrigatório");
         }
@@ -119,7 +119,7 @@ public class DescricaoClienteApiController {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
             desc.setUsuario(usuario);
         }
-        // atualizar ocupacao e campo de estudo se fornecidos
+        // só atualiza se for fornecido
         if (dto.getIdOcupacao() != null) {
             Ocupacao ocup = repOcupacao.findById(dto.getIdOcupacao())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ocupação não encontrada"));

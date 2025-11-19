@@ -34,7 +34,7 @@
     --nexo-accent: #7a5cff; /* violet accent for glow */
 }
 body{ background: linear-gradient(180deg,#f7f9ff 0%, #ffffff 100%); color:#222; }
-.nexo-header{ background: linear-gradient(90deg,var(--nexo-blue), var(--nexo-dark)); padding:0.5rem 0; }
+.nexo-header{ background: #f5f6fa !important; padding:0.5rem 0; }
 .nexo-logo{ height:48px; }
 .nexo-container{ background:#fff; padding:1rem; border-radius:8px; box-shadow:0 6px 18px rgba(10,20,60,0.06); }
 .btn-nexo{ 

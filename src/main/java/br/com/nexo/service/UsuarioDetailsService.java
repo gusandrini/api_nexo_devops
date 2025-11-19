@@ -28,7 +28,7 @@ public class UsuarioDetailsService implements UserDetailsService {
                 String senhaSemEspacos = usuario.getNmSenha() == null ? "" : usuario.getNmSenha().trim();
                 return new User(usuario.getNmEmail(), senhaSemEspacos,
                 usuario.getFuncoes().stream()
-                        .map(funcao -> new SimpleGrantedAuthority(funcao.getNmFuncao().toString()))
-                        .collect(Collectors.toList()));
+                    .map(funcao -> new SimpleGrantedAuthority("ROLE_" + funcao.getNmFuncao().toString()))
+                    .collect(Collectors.toList()));
     }
 }

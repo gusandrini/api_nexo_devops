@@ -14,16 +14,16 @@
             @media (max-width:576px) { .nexo-logo { height:48px; max-height:48px; } }
             /* keep header spacing but use colors from nexo.css */
             .header-title { margin-left:0.75rem; font-weight:700; font-size:1.05rem; color:var(--nexo-dark); }
-            header.nexo-header { padding:12px 0; box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
-            .header-logout-btn { font-size:1.2rem; color:var(--nexo-blue); border:0; background:transparent; display:inline-flex; align-items:center; gap:0.5rem; }
-            .header-logout-btn:hover { color:var(--nexo-accent); text-decoration:none; }
-            @media(min-width:768px){ .header-title{ color: #fff } .header-logout-btn{ color: #fff } }
+            header.nexo-header { padding:12px 0; box-shadow: 0 1px 0 rgba(0,0,0,0.04); background: #f5f6fa !important; }
+            .header-logout-btn { font-size:1.2rem; color:#444; border:0; background:#ededed; display:inline-flex; align-items:center; gap:0.5rem; border-radius:50%; min-width:40px; min-height:40px; transition:background 0.2s, color 0.2s; }
+            .header-logout-btn:hover { background:#e0e0e0; color:#0033ff; text-decoration:none; }
+            @media(min-width:768px){ .header-title{ color: #222 } .header-logout-btn{ color: #444 } }
         </style>
     </th:block>
 </head>
 <body>
     <div th:fragment="header(title)">
-        <header class="nexo-header">
+        <header class="nexo-header" style="background:#f5f6fa;">
             <div class="container d-flex align-items-center gap-3">
                 <a th:href="@{/}" class="d-flex align-items-center me-3">
                     <img th:src="@{/images/NX.png}" alt="NX Logo" class="nexo-logo" style="height:60px;max-height:60px;background:transparent;border-radius:50%;box-shadow:0 2px 12px #b3c6ff;" onerror="this.style.display='none'" />
@@ -35,7 +35,7 @@
                     <form th:action="@{/logout}" method="post"
                           th:if="${T(org.springframework.security.core.context.SecurityContextHolder).getContext().getAuthentication() != null and T(org.springframework.security.core.context.SecurityContextHolder).getContext().getAuthentication().principal != 'anonymousUser'}">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="submit" class="header-logout-btn d-flex align-items-center justify-content-center px-3 py-1 rounded-pill border-0" title="Sair" aria-label="Sair" style="background:linear-gradient(90deg,#1e3c72 0,#ffe066 100%);color:#1e3c72;font-weight:700;box-shadow:0 2px 8px #e0eaff;min-width:40px;min-height:40px;">
+                        <button type="submit" class="header-logout-btn d-flex align-items-center justify-content-center border-0" title="Sair" aria-label="Sair">
                             <i class="bi bi-box-arrow-right" aria-hidden="true" style="font-size:1.5rem;"></i>
                         </button>
                     </form>
