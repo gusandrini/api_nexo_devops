@@ -8,4 +8,5 @@ import br.com.nexo.model.DescricaoCliente;
 
 @Repository
 public interface DescricaoClienteRepository extends JpaRepository<DescricaoCliente, Long> {
+	java.util.List<DescricaoCliente> findByUsuarioNmEmailIgnoreCase(String nmEmail);
 }

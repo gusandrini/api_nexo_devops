@@ -20,13 +20,14 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
             .requestMatchers("/css/**", "/images/**", "/js/**", "/login", "/acesso_negado").permitAll()
             .requestMatchers("/actuator/**").permitAll()
-                .requestMatchers("/usuario/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-            )
+            .requestMatchers("/usuarios/inserir").permitAll()
+            .requestMatchers("/usuario/**").hasRole("ADMIN")
+            .anyRequest().authenticated()
+        )
             .formLogin((login) -> login
                     .loginPage("/login")
-                    .usernameParameter("email")      // mapeia o campo email
-                    .passwordParameter("password")   // mantém o padrão password
+                    .usernameParameter("email")      
+                    .passwordParameter("password")   
                     .defaultSuccessUrl("/home", true)
                     .failureUrl("/login?falha=true")
                     .permitAll()

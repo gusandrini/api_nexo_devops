@@ -18,7 +18,7 @@ import br.com.nexo.service.UsuarioCachingService;
 import br.com.nexo.service.UsuarioService;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioApiController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class UsuarioApiController {
 
 
 
-    @GetMapping("/todos")
+    @GetMapping("/todos_usuarios")
     public List<Usuario> retornaTodosUsuarios() {
         return repUsuario.findAll();
     }
