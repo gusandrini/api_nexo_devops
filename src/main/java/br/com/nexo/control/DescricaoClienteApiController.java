@@ -76,13 +76,11 @@ public class DescricaoClienteApiController {
     @Autowired
     private InfluenciaFamiliarRepository repInfluenciaFamiliar;
 
-    // GET: Todos os registros
     @GetMapping("/todos")
     public List<DescricaoCliente> retornaTodos() {
         return repDesc.findAll();
     }
 
-    // GET: Por ID
     @GetMapping("/{id_descricao}")
     public DescricaoCliente retornaPorId(@PathVariable Long id_descricao) {
         Optional<DescricaoCliente> op = repDesc.findById(id_descricao);
@@ -93,7 +91,6 @@ public class DescricaoClienteApiController {
         }
     }
 
-    // POST: Inserir
     @PostMapping("/inserir")
     public DescricaoCliente inserir(@Valid @RequestBody DescricaoClienteDTO dto) {
         DescricaoCliente desc = new DescricaoCliente();
@@ -138,10 +135,13 @@ public class DescricaoClienteApiController {
         return desc;
     }
 
-    // GET: Histórico do usuário autenticado
+    // Histórico do usuário autenticado
     @GetMapping("/historico_cliente")
     public List<DescricaoCliente> historicoDoUsuario(Authentication authentication) {
         String email = authentication.getName();
+        if (email == null || email.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não autenticado");
+        }
         return repDesc.findByUsuarioNmEmailIgnoreCase(email);
     }
 

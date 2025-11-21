@@ -1,21 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragmentos :: head(title='Nova Descrição - NEXO')}"></head>
+<head>
+    <th:block th:replace="~{fragmentos :: head(title='Nova Descrição - NEXO')}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/nexo.css}" />
+    <script th:src="@{/js/predicao-anim.js}"></script>
+</head>
 <body class="p-4">
 <div th:replace="~{fragmentos :: header(title='Nova Descrição')}"></div>
 
 <div class="container">
     <div class="nexo-container">
-
         <h1 th:text="#{menu.nova_descricao}">Nova Descrição</h1>
         <!-- Mensagem de erro da IA -->
         <div th:if="${erroPredicao != null}" class="alert alert-danger text-center my-2">
             <span th:text="#{label.erro_predicao}"></span>
         </div>
-
         <form th:action="@{/descricao-clientes/novo}" th:object="${descricaoCliente}" method="post" class="nexo-container user-form-card mx-auto mt-4 mb-5 shadow">
             <div class="text-center mb-4">
                 <img th:src="@{/images/NEXO.png}" alt="NEXO" class="nexo-logo mb-2" style="height:64px;filter:drop-shadow(0 0 8px #00bcd4);" onerror="this.style.display='none'" />
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" th:text="#{label.idade}">Idade</label>
+                    <input type="number" th:field="*{nrIdade}" class="form-control" min="0" max="120" th:placeholder="#{label.placeholder_idade}" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" th:text="#{label.salario}">Salário</label>
+                    <input type="number" th:field="*{nrSalario}" class="form-control" min="0" step="0.01" th:placeholder="#{label.placeholder_salario}" />
+                </div>
             </div>
             <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
                 <p><strong th:text="#{label.preencha_formulario}">Erros no formulário:</strong></p>
@@ -27,7 +40,7 @@
                 <div class="col-md-6 mb-3">
                     <label class="form-label" th:text="#{label.ocupacao}">Ocupação</label>
                     <select name="idOcupacao" class="form-select">
-                        <option value="" th:text="'-- selecione --'"></option>
+                        <option value="" th:text="#{label.selecione}"></option>
                         <option th:each="oc : ${lista_ocupacoes}" th:value="${oc.idOcupacao}" th:text="${oc.nmOcupacao}"></option>
                     </select>
                 </div>
@@ -37,14 +50,14 @@
                 <div class="col-md-6 mb-3">
                     <label class="form-label" th:text="#{label.campo_estudo}">Campo de Estudo</label>
                     <select name="idCampoEstudo" class="form-select">
-                        <option value="" th:text="'-- selecione --'"></option>
+                        <option value="" th:text="#{label.selecione}"></option>
                         <option th:each="c : ${lista_campos}" th:value="${c.idCampoEstudo}" th:text="${c.nmCampoEstudo}"></option>
                     </select>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label" th:text="#{label.nivel_educacional}">Nível educacional</label>
                     <select name="idNivelEducacional" class="form-select">
-                        <option value="" th:text="'-- selecione --'"></option>
+                        <option value="" th:text="#{label.selecione}"></option>
                         <option th:each="n : ${lista_niveis}" th:value="${n.idNivelEducacional}" th:text="${n.nmNivelEducacional}"></option>
                     </select>
                 </div>
@@ -54,7 +67,7 @@
             <div class="mb-3">
                 <label class="form-label" th:text="#{label.influencia_familiar}">Influência familiar</label>
                 <select name="idInfluenciaFamiliar" class="form-select">
-                    <option value="" th:text="'-- selecione --'"></option>
+                    <option value="" th:text="#{label.selecione}"></option>
                     <option th:each="i : ${lista_influencias}" th:value="${i.idInfluenciaFamiliar}" th:text="${i.nmInfluenciaFamiliar}"></option>
                 </select>
             </div>
@@ -85,18 +98,28 @@
             </div>
         </form>
 
-        <!-- Barra de porcentagem bonita e funcional -->
+        <!-- Barra de porcentagem animada e visual moderna para predição IA -->
         <div class="nexo-pred-bar-container mt-4 mb-2 p-3 text-center" style="background: linear-gradient(90deg, #e0f7fa 0%, #b2ebf2 100%); border-radius: 18px; box-shadow: 0 2px 12px #00bcd433; max-width: 500px; margin: 0 auto;">
             <div style="font-size:1.1em; color:#0097a7; font-weight:600; letter-spacing:0.5px;" th:text="#{label.resultado_ia}">Probabilidade de Mudança (IA)</div>
-            <div class="progress my-3" style="height: 32px; border-radius: 16px; background: #b2ebf2;">
-                <div class="progress-bar" role="progressbar"
-                     th:style="'width: ' + (${percentual != null ? percentual : 0}) + '%; background: linear-gradient(90deg, #00bcd4 0%, #0097a7 100%); font-size:1.3em; font-weight: bold;'"
-                     th:text="${percentual != null ? percentual + '%': '0%'}"
-                     th:attr="aria-valuenow=${percentual != null ? percentual : 0}"
-                     aria-valuemin="0" aria-valuemax="100"></div>
+                        <div id="pred-loading" style="display:none; margin: 18px auto 10px auto;">
+                                <div class="spinner-border text-info" style="width:2.5rem;height:2.5rem;" role="status">
+                                    <span class="visually-hidden">Calculando...</span>
+                                </div>
+                                <div style="color:#0097a7; font-size:1em; margin-top:6px;">Calculando previsão...</div>
+                        </div>
+            <div class="progress my-3" style="height: 32px; border-radius: 16px; background: #b2ebf2; overflow: hidden;">
+                <div id="pred-bar" class="progress-bar" role="progressbar"
+                     th:attr="data-pred-final=${percentual != null ? percentual : 0}"
+                     style="width:0%; background: linear-gradient(90deg, #00bcd4 0%, #0097a7 100%); font-size:1.3em; font-weight: bold; transition: width 0.7s cubic-bezier(.4,2,.6,1);"
+                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <span id="pred-bar-label">0%</span>
+                </div>
             </div>
             <div style="color:#00796b; font-size:1.2em; font-weight:500;">
-                <span th:text="${percentual != null ? percentual + '%': '0%'}"></span>
+                <span id="pred-bar-label-final" th:text="${percentual != null ? percentual + '%': '0%'}"></span>
+            </div>
+            <div th:if="${classePrevista != null}" style="margin-top: 10px; font-size:1.1em; color:#00695c;">
+                <b th:text="#{label.classe_prevista}"></b> <span th:text="${classePrevista == 1 ? #{label.mudara_carreira} : #{label.nao_mudara_carreira}}"></span>
             </div>
         </div>
     </div>

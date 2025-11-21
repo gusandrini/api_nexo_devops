@@ -3,6 +3,8 @@ package br.com.nexo.dto;
 import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Size;
 
 public class DescricaoClienteDTO {
@@ -23,15 +25,45 @@ public class DescricaoClienteDTO {
     private String dsOcupacao;
 
     @Min(0)
+    @Max(999)
     private Integer qtdaAnosExperiencia;
 
+    @Min(0)
+    @Max(99)
     private Integer dsSatisfacao;
 
+    @Min(0)
+    @Max(99)
     private Integer dsTecnologia;
 
+    @Min(0)
+    @Max(99)
     private Integer dsMudanca;
 
+    @Digits(integer = 15, fraction = 2)
+    private Float nrSalario;
+    
+    @Min(0)
+    @Max(999)
+    private Integer nrIdade;
+    
     private LocalDateTime dtInput;
+    
+    public Float getNrSalario() {
+        return nrSalario;
+    }
+
+    public void setNrSalario(Float nrSalario) {
+        this.nrSalario = nrSalario;
+    }
+
+    public Integer getNrIdade() {
+        return nrIdade;
+    }
+
+    public void setNrIdade(Integer nrIdade) {
+        this.nrIdade = nrIdade;
+    }
 
     public DescricaoClienteDTO() {
     }

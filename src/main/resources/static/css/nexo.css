@@ -1,3 +1,13 @@
+/* Animação para barra de predição IA */
+.progress-bar.progress-animated {
+    animation: pred-bar-stripes 1.2s linear infinite;
+    background-size: 40px 40px;
+    background-image: repeating-linear-gradient(135deg, #00bcd4 0 10px, #0097a7 10px 20px, #00bcd4 20px 30px, #b2ebf2 30px 40px);
+}
+@keyframes pred-bar-stripes {
+    0% { background-position: 0 0; }
+    100% { background-position: 40px 0; }
+}
 .user-page {
         min-height: 100vh;
         background:

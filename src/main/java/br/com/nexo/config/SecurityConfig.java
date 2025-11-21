@@ -16,14 +16,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth
-            .requestMatchers("/css/**", "/images/**", "/js/**", "/login", "/acesso_negado").permitAll()
-            .requestMatchers("/actuator/**").permitAll()
-            .requestMatchers("/usuarios/inserir").permitAll()
-            .requestMatchers("/usuario/**").hasRole("ADMIN")
-            .anyRequest().authenticated()
-        )
+    public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .securityMatcher("/", "/login", "/logout", "/css/**", "/images/**", "/js/**", "/acesso_negado", "/cadastro", "/cadastro/**", "/usuarios/inserir", "/usuario/**", "/actuator/**", "/descricao-clientes/**")
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/css/**", "/images/**", "/js/**", "/login", "/acesso_negado").permitAll()
+                .requestMatchers("/actuator/**").permitAll()
+                .requestMatchers("/cadastro", "/cadastro/**").permitAll()
+                .requestMatchers("/usuarios/inserir").permitAll()
+                .requestMatchers("/usuario/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            )
             .formLogin((login) -> login
                     .loginPage("/login")
                     .usernameParameter("email")      
@@ -38,11 +41,10 @@ public class SecurityConfig {
                     .permitAll()
             )
             .exceptionHandling((exception) -> 
-            exception.accessDeniedHandler((request, response, ex) -> {
-                response.sendRedirect("/acesso_negado");
-            })
+                exception.accessDeniedHandler((request, response, ex) -> {
+                    response.sendRedirect("/acesso_negado");
+                })
             );
-
         return http.build();
     }
 }

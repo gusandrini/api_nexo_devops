@@ -1,6 +1,9 @@
 package br.com.nexo.control;
 
 import br.com.nexo.config.JwtUtil;
+
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,8 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+
+import br.com.nexo.dto.LoginRequest;
 
 @RestController
 @RequestMapping("/auth")
@@ -28,16 +31,16 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody Map<String, String> authRequest) {
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.get("email"), authRequest.get("password")));
+                    new UsernamePasswordAuthenticationToken(loginRequest.getNmEmail(), loginRequest.getNmSenha()));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(401).body("Credenciais inválidas");
         }
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.get("email"));
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getNmEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
-        Map<String, String> response = new HashMap<>();
+        Map<String, String> response = new java.util.HashMap<>();
         response.put("token", jwt);
         return ResponseEntity.ok(response);
     }

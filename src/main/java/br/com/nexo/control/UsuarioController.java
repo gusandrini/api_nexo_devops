@@ -98,7 +98,6 @@ public class UsuarioController {
     @PostMapping("/usuario/editar")
     public ModelAndView editarUsuario(@Validated(br.com.nexo.validation.ValidationGroups.Update.class) Usuario usuario, BindingResult bindingResult,
             @RequestParam(name = "id_funcao", required = false) Long[] id_funcao) {
-        // If validation errors (other than password), return to form
         if (bindingResult.hasErrors()) {
             ModelAndView mv = new ModelAndView("usuario/editar");
             mv.addObject("usuario", usuario);
@@ -106,9 +105,7 @@ public class UsuarioController {
             return mv;
         }
 
-        // Preserve existing password when the form leaves the password blank
         if (usuario.getNmSenha() == null || usuario.getNmSenha().isBlank()) {
-            // fetch existing password from DB
             repUsuario.findById(usuario.getIdUsuario())
                     .ifPresent(existing -> usuario.setNmSenha(existing.getNmSenha()));
         } else {

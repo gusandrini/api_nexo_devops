@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import org.springframework.security.core.Authentication;
 import br.com.nexo.dto.DescricaoClienteDTO;
+import br.com.nexo.dto.PredicaoIADTO;
 import br.com.nexo.service.PredicaoService;
 import br.com.nexo.model.Predicao;
 import br.com.nexo.repository.PredicaoRepository;
@@ -35,8 +36,22 @@ public class PredicaoApiController {
     @Autowired
     private PredicaoService predicaoService;
     @PostMapping("/predizer")
-    public Double predizer(@RequestBody DescricaoClienteDTO dto, Authentication authentication) {
-        return predicaoService.obterPercentualMudanca(dto);
+    public PredicaoIADTO predizer(@RequestBody DescricaoClienteDTO dto, Authentication authentication) {
+        var iaResult = predicaoService.obterPredicaoIA(dto);
+        if (iaResult == null) return new PredicaoIADTO(null, null);
+        Integer classePrevista = null;
+        Double probabilidadeMudar = null;
+        try {
+            if (iaResult.get("classe_prevista") != null) {
+                classePrevista = Integer.valueOf(iaResult.get("classe_prevista").toString());
+            }
+            if (iaResult.get("probabilidade_mudar") != null) {
+                probabilidadeMudar = Double.valueOf(iaResult.get("probabilidade_mudar").toString());
+            }
+        } catch (Exception e) {
+            // erro de parse, retorna null
+        }
+        return new PredicaoIADTO(classePrevista, probabilidadeMudar);
     }
 
 }

@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -19,7 +20,8 @@ import jakarta.validation.constraints.Size;
 public class Predicao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "predicao_seq")
+    @SequenceGenerator(name = "predicao_seq", sequenceName = "SEQ_T_NX_PREDICAO", allocationSize = 1)
     @Column(name = "id_predicao")
     private Long idPredicao;
 

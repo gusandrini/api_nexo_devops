@@ -30,16 +30,26 @@ public class UsuarioApiController {
     @Autowired
     private UsuarioService servUsuario;
 
-
-
     @GetMapping("/todos_usuarios")
     public List<Usuario> retornaTodosUsuarios() {
-        return repUsuario.findAll();
+        List<Usuario> usuarios = repUsuario.findAll();
+        usuarios.forEach(u -> {
+            if (u.getFuncoes() != null) {
+                u.getFuncoes().forEach(f -> f.setUsuarios(null));
+            }
+        });
+        return usuarios;
     }
 
     @GetMapping("/todos_cacheable")
     public List<Usuario> retornaTodosUsuariosCacheable() {
-        return cacheUsuario.findAll();
+        List<Usuario> usuarios = cacheUsuario.findAll();
+        usuarios.forEach(u -> {
+            if (u.getFuncoes() != null) {
+                u.getFuncoes().forEach(f -> f.setUsuarios(null));
+            }
+        });
+        return usuarios;
     }
 
     @GetMapping("/paginados")
@@ -53,7 +63,11 @@ public class UsuarioApiController {
     public Usuario retornaUsuarioPorID(@PathVariable Long id_usuario) {
         Optional<Usuario> op = cacheUsuario.findById(id_usuario);
         if (op.isPresent()) {
-            return op.get();
+            Usuario usuario = op.get();
+            if (usuario.getFuncoes() != null) {
+                usuario.getFuncoes().forEach(f -> f.setUsuarios(null));
+            }
+            return usuario;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -63,6 +77,9 @@ public class UsuarioApiController {
     public Usuario inserirUsuario(@Valid @RequestBody Usuario usuario) {
         repUsuario.save(usuario);
         cacheUsuario.limparCache();
+        if (usuario.getFuncoes() != null) {
+            usuario.getFuncoes().forEach(f -> f.setUsuarios(null));
+        }
         return usuario;
     }
 
@@ -77,6 +94,9 @@ public class UsuarioApiController {
             usuarioAtual.setFuncoes(usuario.getFuncoes());
             repUsuario.save(usuarioAtual);
             cacheUsuario.limparCache();
+            if (usuarioAtual.getFuncoes() != null) {
+                usuarioAtual.getFuncoes().forEach(f -> f.setUsuarios(null));
+            }
             return usuarioAtual;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -90,6 +110,9 @@ public class UsuarioApiController {
             Usuario usuario = op.get();
             repUsuario.delete(usuario);
             cacheUsuario.limparCache();
+            if (usuario.getFuncoes() != null) {
+                usuario.getFuncoes().forEach(f -> f.setUsuarios(null));
+            }
             return usuario;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

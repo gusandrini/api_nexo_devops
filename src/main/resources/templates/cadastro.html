@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos :: head(title='Cadastro - NEXO')}"></head>
+
+<body class="login-page">
+    <main class="login-wrapper container">
+        <div class="login-box card p-4 p-md-5">
+            <div class="logo-wrap text-center mb-3">
+                <img th:src="@{/images/NEXO.png}" alt="NEXO" class="login-logo" onerror="this.style.display='none'" />
+            </div>
+            <h2 class="text-center mb-4 brand-gradient-text">Criar Conta</h2>
+            <form th:action="@{/cadastro}" th:object="${usuario}" method="post" autocomplete="off">
+                <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
+                    <p><strong>Erros no formulário:</strong></p>
+                    <ul>
+                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+                <div class="mb-3">
+                    <label for="nmCliente" class="form-label">Nome</label>
+                    <input type="text" th:field="*{nmCliente}" id="nmCliente" class="form-control form-control-lg" placeholder="Nome completo" />
+                    <div class="text-danger" th:if="${#fields.hasErrors('nmCliente')}" th:errors="*{nmCliente}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="nmEmail" class="form-label">Email</label>
+                    <input type="email" th:field="*{nmEmail}" id="nmEmail" class="form-control form-control-lg" placeholder="email@exemplo.com" />
+                    <div class="text-danger" th:if="${#fields.hasErrors('nmEmail')}" th:errors="*{nmEmail}"></div>
+                </div>
+                <div class="mb-4">
+                    <label for="nmSenha" class="form-label">Senha</label>
+                    <input type="password" th:field="*{nmSenha}" id="nmSenha" class="form-control form-control-lg" placeholder="********" />
+                    <div class="text-danger" th:if="${#fields.hasErrors('nmSenha')}" th:errors="*{nmSenha}"></div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-nexo btn-lg">Cadastrar</button>
+                </div>
+                <div class="d-grid mt-3">
+                    <a th:href="@{/login}" class="btn btn-outline-nexo btn-lg">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
