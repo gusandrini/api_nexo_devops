@@ -102,7 +102,7 @@ Authorization: Bearer <token>
 - `DELETE /api/usuarios/{id}` — Remover usuário
 
 ### Mensageria
-- Envio de eventos para RabbitMQ ao criar/atualizar descrições
+- Envio de eventos para RabbitMQ ao criar/atualizar usuários
 
 ### Internacionalização
 - Suporte completo a português e inglês (interface e mensagens)
@@ -123,11 +123,6 @@ Authorization: Bearer <token>
   COPY target/api_nexo-0.0.1-SNAPSHOT.jar app.jar
   ENTRYPOINT ["java", "-jar", "app.jar"]
   ```
-
----
-
-## Contato
-Dúvidas ou sugestões? Entre em contato com os integrantes acima.
 
 ---
 
