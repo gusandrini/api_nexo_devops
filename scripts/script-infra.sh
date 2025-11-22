@@ -41,3 +41,16 @@ az webapp create \
   --resource-group "$RESOURCE_GROUP_NAME" \
   --plan "$APP_SERVICE_PLAN" \
   --runtime "$RUNTIME"
+
+DB_URL="jdbc:sqlserver://$SERVER_NAME.database.windows.net:1433;database=$DBNAME;user=$USERNAME@$SERVER_NAME;password=$PASSWORD;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"
+
+az webapp config appsettings set \
+    --name "$WEBAPP_NAME" \
+    --resource-group "$RESOURCE_GROUP_NAME" \
+    --settings \
+     DB_URL="$DB_URL" \
+     DB_USERNAME="$USERNAME" \
+     DB_PASSWORD="$PASSWORD" \
+     SPRING_FLYWAY_ENABLED=true
+
+az webapp restart --name "$WEBAPP_NAME" --resource-group "$RESOURCE_GROUP_NAME"
