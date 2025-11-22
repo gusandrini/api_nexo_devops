@@ -23,8 +23,6 @@ import br.com.nexo.repository.FuncaoRepository;
 import br.com.nexo.repository.UsuarioRepository;
 import br.com.nexo.service.UsuarioCachingService;
 
-import br.com.nexo.mensageria.RabbitMQProdutor;
-
 @Controller
 public class UsuarioController {
 
@@ -39,9 +37,6 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioCachingService cache;
-
-    @Autowired
-    private RabbitMQProdutor rabbitMQProdutor;
 
     @GetMapping("/usuario/lista")
     public ModelAndView listarUsuarios() {
@@ -63,15 +58,20 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuario/novo")
-    public ModelAndView inserirUsuario(@Validated(br.com.nexo.validation.ValidationGroups.Create.class) Usuario usuario, BindingResult bindingResult,
+    public ModelAndView inserirUsuario(
+            @Validated(br.com.nexo.validation.ValidationGroups.Create.class) Usuario usuario,
+            BindingResult bindingResult,
             @RequestParam(name = "id_funcao", required = false) Long[] id_funcao) {
+
         if (bindingResult.hasErrors()) {
             ModelAndView mv = new ModelAndView("usuario/novo");
             mv.addObject("usuario", usuario);
             mv.addObject("lista_funcoes", repFuncao.findAll());
             return mv;
         }
+
         usuario.setNmSenha(encoder.encode(usuario.getNmSenha()));
+
         Set<Funcao> funcoes = new HashSet<>();
         if (id_funcao != null) {
             for (Long id : id_funcao) {
@@ -79,25 +79,33 @@ public class UsuarioController {
             }
         }
         usuario.setFuncoes(funcoes);
+
         repUsuario.save(usuario);
         cache.limparCache();
-        String notificacao = "Usuário cadastrado com sucesso: " + usuario.getNmCliente() + " (" + usuario.getNmEmail() + ")";
-        rabbitMQProdutor.enviarMensagem(notificacao);
+
+        // Se quiser logar a “notificação”, pode manter só um log:
+        System.out.println("Usuário cadastrado com sucesso: " +
+                usuario.getNmCliente() + " (" + usuario.getNmEmail() + ")");
+
         return new ModelAndView("redirect:/usuario/lista");
     }
 
     @GetMapping("/usuario/editar")
     public ModelAndView editarUsuarioForm(@RequestParam Long id) {
         ModelAndView mv = new ModelAndView("usuario/editar");
-        Usuario usuario = repUsuario.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+        Usuario usuario = repUsuario.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
         mv.addObject("usuario", usuario);
         mv.addObject("lista_funcoes", repFuncao.findAll());
         return mv;
     }
 
     @PostMapping("/usuario/editar")
-    public ModelAndView editarUsuario(@Validated(br.com.nexo.validation.ValidationGroups.Update.class) Usuario usuario, BindingResult bindingResult,
+    public ModelAndView editarUsuario(
+            @Validated(br.com.nexo.validation.ValidationGroups.Update.class) Usuario usuario,
+            BindingResult bindingResult,
             @RequestParam(name = "id_funcao", required = false) Long[] id_funcao) {
+
         if (bindingResult.hasErrors()) {
             ModelAndView mv = new ModelAndView("usuario/editar");
             mv.addObject("usuario", usuario);
@@ -119,10 +127,13 @@ public class UsuarioController {
             }
         }
         usuario.setFuncoes(funcoes);
+
         repUsuario.save(usuario);
         cache.limparCache();
-        String notificacao = "Usuário editado: " + usuario.getNmCliente() + " (" + usuario.getNmEmail() + ")";
-        rabbitMQProdutor.enviarMensagem(notificacao);
+
+        System.out.println("Usuário editado: " +
+                usuario.getNmCliente() + " (" + usuario.getNmEmail() + ")");
+
         return new ModelAndView("redirect:/usuario/lista");
     }
 

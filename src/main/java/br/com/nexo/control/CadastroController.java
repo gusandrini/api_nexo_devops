@@ -18,7 +18,6 @@ import br.com.nexo.model.Usuario;
 import br.com.nexo.repository.FuncaoRepository;
 import br.com.nexo.repository.UsuarioRepository;
 import br.com.nexo.service.UsuarioCachingService;
-import br.com.nexo.mensageria.RabbitMQProdutor;
 
 @Controller
 public class CadastroController {
@@ -31,7 +30,6 @@ public class CadastroController {
     @Autowired
     private UsuarioCachingService cache;
     @Autowired
-    private RabbitMQProdutor rabbitMQProdutor;
 
     @GetMapping("/cadastro")
     public ModelAndView cadastroForm() {
@@ -61,7 +59,6 @@ public class CadastroController {
         repUsuario.save(usuario);
         cache.limparCache();
         String notificacao = "Novo cadastro: " + usuario.getNmCliente() + " (" + usuario.getNmEmail() + ")";
-        rabbitMQProdutor.enviarMensagem(notificacao);
         return new ModelAndView("redirect:/login?cadastroSucesso");
     }
 }
