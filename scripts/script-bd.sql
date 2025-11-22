@@ -24,11 +24,13 @@ IF OBJECT_ID('dbo.SEQ_TB_NX_INFLUENCIA_FAM', 'SO') IS NOT NULL DROP SEQUENCE dbo
 IF OBJECT_ID('dbo.SEQ_TB_NX_NIVEL_EDUCACAO', 'SO') IS NOT NULL DROP SEQUENCE dbo.SEQ_TB_NX_NIVEL_EDUCACAO;
 IF OBJECT_ID('dbo.SEQ_TB_NX_OCUPACAO', 'SO') IS NOT NULL DROP SEQUENCE dbo.SEQ_TB_NX_OCUPACAO;
 IF OBJECT_ID('dbo.SEQ_TB_NX_DESCRICAO_CLIENTE', 'SO') IS NOT NULL DROP SEQUENCE dbo.SEQ_TB_NX_DESCRICAO_CLIENTE;
+
+-- NÃO USAREMOS MAIS SEQUENCE PARA PREDICAO
 IF OBJECT_ID('dbo.SEQ_T_NX_PREDICAO', 'SO') IS NOT NULL DROP SEQUENCE dbo.SEQ_T_NX_PREDICAO;
 
 
 /* ============================================================
-   SEQUENCES  (NOMES ALINHADOS COM O JAVA)
+   SEQUENCES (NÃO incluem predicao)
    ============================================================ */
 
 CREATE SEQUENCE dbo.SEQ_TB_NX_USUARIO           AS BIGINT START WITH 1 INCREMENT BY 1;
@@ -39,7 +41,6 @@ CREATE SEQUENCE dbo.SEQ_TB_NX_INFLUENCIA_FAM    AS BIGINT START WITH 1 INCREMENT
 CREATE SEQUENCE dbo.SEQ_TB_NX_NIVEL_EDUCACAO    AS BIGINT START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE dbo.SEQ_TB_NX_OCUPACAO          AS BIGINT START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE dbo.SEQ_TB_NX_DESCRICAO_CLIENTE AS BIGINT START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE dbo.SEQ_T_NX_PREDICAO           AS BIGINT START WITH 1 INCREMENT BY 1;
 
 
 /* ============================================================
@@ -47,14 +48,14 @@ CREATE SEQUENCE dbo.SEQ_T_NX_PREDICAO           AS BIGINT START WITH 1 INCREMENT
    ============================================================ */
 
 ---------------------------------------------------------------
--- TB_NX_USUARIO  (ajustado pros @Column do Java)
+-- TB_NX_USUARIO
 ---------------------------------------------------------------
 CREATE TABLE dbo.TB_NX_USUARIO (
     id_usuario BIGINT NOT NULL
         CONSTRAINT DF_TB_NX_USUARIO_ID DEFAULT NEXT VALUE FOR dbo.SEQ_TB_NX_USUARIO,
-    nm_cliente NVARCHAR(80) NOT NULL,   -- Java usa length = 80
-    nm_email   NVARCHAR(80) NOT NULL,   -- Java usa length = 80
-    nm_senha   NVARCHAR(100) NOT NULL,  -- Java usa length = 100 (para hash)
+    nm_cliente NVARCHAR(80) NOT NULL,
+    nm_email   NVARCHAR(80) NOT NULL,
+    nm_senha   NVARCHAR(100) NOT NULL,
     CONSTRAINT PK_TB_NX_USUARIO PRIMARY KEY (id_usuario)
 );
 
@@ -69,7 +70,7 @@ CREATE TABLE dbo.TB_NX_FUNCAO (
 );
 
 ---------------------------------------------------------------
--- TB_FUNCAO_USUARIO (Many-To-Many)
+-- TB_FUNCAO_USUARIO
 ---------------------------------------------------------------
 CREATE TABLE dbo.TB_FUNCAO_USUARIO (
     id_funcao_usuario BIGINT NOT NULL
@@ -124,7 +125,7 @@ CREATE TABLE dbo.TB_NX_OCUPACAO (
 );
 
 ---------------------------------------------------------------
--- TB_NX_DESCRICAO_CLIENTE
+-- TB_NX_DESCRICAO_CLIENTE (usa SEQUENCE)
 ---------------------------------------------------------------
 CREATE TABLE dbo.TB_NX_DESCRICAO_CLIENTE (
     id_descricao BIGINT NOT NULL
@@ -169,11 +170,10 @@ CREATE TABLE dbo.TB_NX_DESCRICAO_CLIENTE (
 );
 
 ---------------------------------------------------------------
--- T_NX_PREDICAO
+-- T_NX_PREDICAO (usa IDENTITY em id_predicao)
 ---------------------------------------------------------------
 CREATE TABLE dbo.T_NX_PREDICAO (
-    id_predicao BIGINT NOT NULL
-        CONSTRAINT DF_T_NX_PREDICAO_ID DEFAULT NEXT VALUE FOR dbo.SEQ_T_NX_PREDICAO,
+    id_predicao BIGINT IDENTITY(1,1) NOT NULL,
 
     id_descricao          BIGINT NOT NULL,
     ds_resultado_predicao INT NOT NULL,
