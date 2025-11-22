@@ -1,9 +1,7 @@
 package br.com.nexo.control;
 
 import br.com.nexo.config.JwtUtil;
-
-import java.util.Map;
-
+import br.com.nexo.dto.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,21 +9,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-
-import br.com.nexo.dto.LoginRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")  // ✅ mantém /api/auth/login para o mobile
 public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -33,15 +27,30 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) {
         try {
+            // Autentica usuário
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getNmEmail(), loginRequest.getNmSenha()));
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getNmEmail(),
+                            loginRequest.getNmSenha()
+                    )
+            );
+
+            // Pega o UserDetails autenticado
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+            // Gera o token JWT
+            String jwt = jwtUtil.generateToken(userDetails);
+
+            // Monta resposta
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", jwt);
+            response.put("username", userDetails.getUsername());
+
+            return ResponseEntity.ok(response);
+
         } catch (AuthenticationException e) {
+            // 401 se email/senha estiverem errados
             return ResponseEntity.status(401).body("Credenciais inválidas");
         }
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getNmEmail());
-        final String jwt = jwtUtil.generateToken(userDetails);
-        Map<String, String> response = new java.util.HashMap<>();
-        response.put("token", jwt);
-        return ResponseEntity.ok(response);
     }
 }
