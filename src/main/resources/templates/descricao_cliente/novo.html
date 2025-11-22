@@ -11,8 +11,34 @@
 
 <div class="container">
     <div class="nexo-container">
+        <!-- Instruções gerais do formulário -->
+        <div class="alert alert-info shadow-sm mb-4 p-4" style="border-radius: 18px; background: linear-gradient(90deg,#e3f2fd 0%,#b2ebf2 100%); color:#01579b;">
+            <h2 style="font-size:1.5em; font-weight:700; color:#0097a7; margin-bottom:0.7em;" th:text="#{descricao.instrucao.titulo}">Como preencher sua descrição profissional</h2>
+            <p th:text="#{descricao.instrucao.texto}">Este formulário é a principal solução do projeto NEXO. Ele coleta informações detalhadas sobre sua trajetória profissional, perfil, expectativas e contexto atual. Os dados preenchidos aqui são usados para gerar predições inteligentes sobre sua probabilidade de mudança de carreira, além de alimentar seu histórico e personalizar recomendações.</p>
+            <ul style="font-size:1.08em; margin-top:1em;">
+                <li><b th:text="#{descricao.instrucao.campo_atenção}">Preencha todos os campos com atenção</b> <span th:text="#{descricao.instrucao.campo_atenção.complemento}">para garantir uma análise precisa.</span></li>
+                <li th:text="#{descricao.instrucao.apos_salvar}">Após salvar, você poderá acompanhar sua evolução e receber insights personalizados.</li>
+                <li th:text="#{descricao.instrucao.dados_protegidos}">Os dados são protegidos e usados apenas para fins de orientação profissional.</li>
+            </ul>
+        </div>
+        <!-- Instruções específicas dos campos -->
+        <div class="mb-4 p-3" style="background: #f7f9ff; border-radius: 14px; box-shadow: 0 2px 8px #00bcd422;">
+            <h3 style="font-size:1.18em; color:#00796b; font-weight:600; margin-bottom:0.6em;" th:text="#{descricao.campos.titulo}">O que significa cada campo?</h3>
+            <ul style="font-size:1.05em;">
+                <li><b th:text="#{label.idade}">Idade:</b> <span th:text="#{descricao.campos.idade}">Sua idade atual.</span></li>
+                <li><b th:text="#{label.salario}">Salário:</b> <span th:text="#{descricao.campos.salario}">Salário mensal bruto atual.</span></li>
+                <li><b th:text="#{label.ocupacao}">Ocupação:</b> <span th:text="#{descricao.campos.ocupacao}">Cargo ou função principal que você exerce.</span></li>
+                <li><b th:text="#{label.campo_estudo}">Campo de Estudo:</b> <span th:text="#{descricao.campos.campo_estudo}">Área de formação ou estudo predominante.</span></li>
+                <li><b th:text="#{label.nivel_educacional}">Nível educacional:</b> <span th:text="#{descricao.campos.nivel_educacional}">Grau máximo de escolaridade concluído.</span></li>
+                <li><b th:text="#{label.influencia_familiar}">Influência familiar:</b> <span th:text="#{descricao.campos.influencia_familiar}">Quanto sua família influencia suas decisões profissionais.</span></li>
+                <li><b th:text="#{label.anos_experiencia}">Anos de experiência:</b> <span th:text="#{descricao.campos.anos_experiencia}">Tempo total de atuação profissional.</span></li>
+                <li><b th:text="#{label.satisfacao}">Satisfação:</b> <span th:text="#{descricao.campos.satisfacao}">Seu nível de satisfação com a carreira atual (1-10).</span></li>
+                <li><b th:text="#{label.tecnologia}">Tecnologia:</b> <span th:text="#{descricao.campos.tecnologia}">Quanto você utiliza ou domina tecnologia no trabalho (1-10).</span></li>
+                <li><b th:text="#{label.mudanca}">Mudança:</b> <span th:text="#{descricao.campos.mudanca}">Seu interesse ou abertura para mudanças de carreira (1-10).</span></li>
+            </ul>
+            <div style="margin-top:1em; color:#0097a7; font-size:1em;" th:text="#{descricao.campos.sinceridade}">Preencha com sinceridade para obter resultados mais relevantes!</div>
+        </div>
         <h1 th:text="#{menu.nova_descricao}">Nova Descrição</h1>
-        <!-- Mensagem de erro da IA -->
         <div th:if="${erroPredicao != null}" class="alert alert-danger text-center my-2">
             <span th:text="#{label.erro_predicao}"></span>
         </div>
@@ -78,18 +104,18 @@
                 <input type="number" th:field="*{qtdaAnosExperiencia}" class="form-control" min="0" />
             </div>
             <div class="mb-3">
-                <label class="form-label" th:text="#{label.satisfacao}">Satisfação (1-5)</label>
-                <input type="number" th:field="*{dsSatisfacao}" class="form-control" min="0" max="5" />
+                <label class="form-label" th:text="#{label.satisfacao}">Satisfação (1-10)</label>
+                <input type="number" th:field="*{dsSatisfacao}" class="form-control" min="0" max="10" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label" th:text="#{label.tecnologia}">Tecnologia (1-5)</label>
-                <input type="number" th:field="*{dsTecnologia}" class="form-control" min="0" max="5" />
+                <label class="form-label" th:text="#{label.tecnologia}">Tecnologia (1-10)</label>
+                <input type="number" th:field="*{dsTecnologia}" class="form-control" min="0" max="10" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label" th:text="#{label.mudanca}">Mudança (1-5)</label>
-                <input type="number" th:field="*{dsMudanca}" class="form-control" min="0" max="5" />
+                <label class="form-label" th:text="#{label.mudanca}">Mudança (1-10)</label>
+                <input type="number" th:field="*{dsMudanca}" class="form-control" min="0" max="10" />
             </div>
 
             <div class="d-flex gap-2">
@@ -98,25 +124,19 @@
             </div>
         </form>
 
-        <!-- Barra de porcentagem animada e visual moderna para predição IA -->
-        <div class="nexo-pred-bar-container mt-4 mb-2 p-3 text-center" style="background: linear-gradient(90deg, #e0f7fa 0%, #b2ebf2 100%); border-radius: 18px; box-shadow: 0 2px 12px #00bcd433; max-width: 500px; margin: 0 auto;">
+        <!-- Barra de porcentagem animada para predição IA -->
+        <div th:if="${percentual != null}" class="nexo-pred-bar-container mt-4 mb-2 p-3 text-center" style="background: linear-gradient(90deg, #e0f7fa 0%, #b2ebf2 100%); border-radius: 18px; box-shadow: 0 2px 12px #00bcd433; max-width: 500px; margin: 0 auto;">
             <div style="font-size:1.1em; color:#0097a7; font-weight:600; letter-spacing:0.5px;" th:text="#{label.resultado_ia}">Probabilidade de Mudança (IA)</div>
-                        <div id="pred-loading" style="display:none; margin: 18px auto 10px auto;">
-                                <div class="spinner-border text-info" style="width:2.5rem;height:2.5rem;" role="status">
-                                    <span class="visually-hidden">Calculando...</span>
-                                </div>
-                                <div style="color:#0097a7; font-size:1em; margin-top:6px;">Calculando previsão...</div>
-                        </div>
             <div class="progress my-3" style="height: 32px; border-radius: 16px; background: #b2ebf2; overflow: hidden;">
                 <div id="pred-bar" class="progress-bar" role="progressbar"
-                     th:attr="data-pred-final=${percentual != null ? percentual : 0}"
-                     style="width:0%; background: linear-gradient(90deg, #00bcd4 0%, #0097a7 100%); font-size:1.3em; font-weight: bold; transition: width 0.7s cubic-bezier(.4,2,.6,1);"
-                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                    <span id="pred-bar-label">0%</span>
+                     th:attr="data-pred-final=${percentual}"
+                     th:style="'width:' + ${percentual} + '%; background: linear-gradient(90deg, #00bcd4 0%, #0097a7 100%); font-size:1.3em; font-weight: bold; transition: width 0.7s cubic-bezier(.4,2,.6,1);'"
+                     aria-valuenow="${percentual}" aria-valuemin="0" aria-valuemax="100">
+                    <span id="pred-bar-label" th:text="${percentual + '%'}">0%</span>
                 </div>
             </div>
             <div style="color:#00796b; font-size:1.2em; font-weight:500;">
-                <span id="pred-bar-label-final" th:text="${percentual != null ? percentual + '%': '0%'}"></span>
+                <span id="pred-bar-label-final" th:text="${percentual + '%'}"></span>
             </div>
             <div th:if="${classePrevista != null}" style="margin-top: 10px; font-size:1.1em; color:#00695c;">
                 <b th:text="#{label.classe_prevista}"></b> <span th:text="${classePrevista == 1 ? #{label.mudara_carreira} : #{label.nao_mudara_carreira}}"></span>

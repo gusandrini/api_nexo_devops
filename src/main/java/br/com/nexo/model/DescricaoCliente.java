@@ -90,7 +90,7 @@ public class DescricaoCliente {
     private Integer nrIdade;
 
     @Column(name = "nr_salario", nullable = true)
-    @Digits(integer = 15, fraction = 2)
+    @Min(0)
     private Float nrSalario;
     public Integer getNrIdade() {
         return nrIdade;
