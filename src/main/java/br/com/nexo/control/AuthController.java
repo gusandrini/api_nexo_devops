@@ -2,6 +2,8 @@ package br.com.nexo.control;
 
 import br.com.nexo.config.JwtUtil;
 import br.com.nexo.dto.LoginRequest;
+import br.com.nexo.model.Usuario;          // ✅ ajustado: model.Usuario
+import br.com.nexo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")  // ✅ mantém /api/auth/login para o mobile
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
@@ -24,10 +26,13 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private UsuarioService usuarioService;  // usado para trazer o usuário completo
+
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) {
         try {
-            // Autentica usuário
+            // Autentica usuário (usa nmEmail e nmSenha do LoginRequest)
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getNmEmail(),
@@ -35,16 +40,19 @@ public class AuthController {
                     )
             );
 
-            // Pega o UserDetails autenticado
+            // Usuário autenticado
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
             // Gera o token JWT
             String jwt = jwtUtil.generateToken(userDetails);
 
-            // Monta resposta
+            // Busca o usuário completo no banco para devolver ao mobile
+            Usuario usuario = usuarioService.buscarPorEmail(loginRequest.getNmEmail());
+
+            // Monta resposta exatamente no formato que o mobile espera
             Map<String, Object> response = new HashMap<>();
             response.put("token", jwt);
-            response.put("username", userDetails.getUsername());
+            response.put("usuario", usuario);
 
             return ResponseEntity.ok(response);
 
