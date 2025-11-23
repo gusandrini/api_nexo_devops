@@ -83,10 +83,6 @@ public class UsuarioController {
         repUsuario.save(usuario);
         cache.limparCache();
 
-        // Se quiser logar a “notificação”, pode manter só um log:
-        System.out.println("Usuário cadastrado com sucesso: " +
-                usuario.getNmCliente() + " (" + usuario.getNmEmail() + ")");
-
         return new ModelAndView("redirect:/usuario/lista");
     }
 
@@ -130,9 +126,6 @@ public class UsuarioController {
 
         repUsuario.save(usuario);
         cache.limparCache();
-
-        System.out.println("Usuário editado: " +
-                usuario.getNmCliente() + " (" + usuario.getNmEmail() + ")");
 
         return new ModelAndView("redirect:/usuario/lista");
     }

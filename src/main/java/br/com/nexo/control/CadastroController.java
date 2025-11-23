@@ -29,7 +29,6 @@ public class CadastroController {
     private PasswordEncoder encoder;
     @Autowired
     private UsuarioCachingService cache;
-    @Autowired
 
     @GetMapping("/cadastro")
     public ModelAndView cadastroForm() {
@@ -49,9 +48,9 @@ public class CadastroController {
         // Sempre atribui função CLIENTE
         Set<Funcao> funcoes = new HashSet<>();
         Funcao funcaoCliente = repFuncao.findAll().stream()
-            .filter(f -> f.getNmFuncao() == EnumFuncao.CLIENTE)
-            .findFirst()
-            .orElse(null);
+                .filter(f -> f.getNmFuncao() == EnumFuncao.CLIENTE)
+                .findFirst()
+                .orElse(null);
         if (funcaoCliente != null) {
             funcoes.add(funcaoCliente);
         }
